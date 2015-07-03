@@ -18,21 +18,30 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.Menu;
+import javafx.scene.layout.VBox;
 
 
 @SuppressWarnings({ "restriction" })
 public class StartGUI extends Application {
 	
+	static Spieler spielerA = new Spieler();
+	static Spieler spielerB = new Spieler();
+	String werIstDran = null;
 	
 
 	 public static void main(String[] args) {
 	        launch(args);
-	    }
+	       
+	        
+	 }
 	    
 	    @Override
 	    public void start(Stage anmeldungsStage) {
 	        anmeldungsStage.setTitle("Kalaha");
+	        spielerA.setIstAmZug(true);
 	        
 	        //Hello World Code-----Start
 //	        Button btn = new Button();
@@ -57,7 +66,7 @@ public class StartGUI extends Application {
 	        grid.setHgap(10);
 	        grid.setVgap(10);
 	        grid.setPadding(new Insets(25, 25, 25, 25));
-	        grid.setGridLinesVisible(true);
+	        //grid.setGridLinesVisible(true);
 	        
 	        Text scenetitle = new Text("Willkommen in der wunderbaren Welt des Kalaha!");
 	        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -68,8 +77,8 @@ public class StartGUI extends Application {
 	        userName.setTextFill(Color.ANTIQUEWHITE);
 	        grid.add(userName, 0, 1);
 
-	        TextField userTextField = new TextField();
-	        grid.add(userTextField, 1, 1);
+	        TextField spielerNameText = new TextField();
+	        grid.add(spielerNameText, 1, 1);
 
 	        
 	        Button btn = new Button("Anmelden");
@@ -88,9 +97,49 @@ public class StartGUI extends Application {
 	            @Override
 	            public void handle(ActionEvent e) {
 	            	Stage spielStage = new Stage();
-	            	
-	            	//Stage Code ovn HauptGUI-Klasse
+	            	//
+	            	//
+	            	//
+	            	//Stage Code von HauptGUI-Klasse
 	            	spielStage.setTitle("Kalaha");
+	            	
+	            	spielerA.setName(spielerNameText.getText());
+					spielerB.setName("SpielerB");
+					
+					VBox topContainer = new VBox();  //Creates a container to hold all Menu Objects.
+					MenuBar mainMenu = new MenuBar();  //Creates our main menu to hold our Sub-Menus.
+					
+					topContainer.getChildren().add(mainMenu);
+
+					
+					final Menu menuSpiel = new Menu("Spiel");
+					 final Menu menuOptionen = new Menu("Optionen");
+					 final Menu menuHilfe = new Menu("Hilfe");
+					 
+					 mainMenu.getMenus().addAll(menuSpiel, menuOptionen, menuHilfe);
+	            	
+	            	Label spielernameA = new Label(spielerA.getName());
+	                spielernameA.setTextFill(Color.web("#FFFF66"));
+	                spielernameA.setFont(new Font("Arial", 30));
+	                
+	                Label spielernameB = new Label("Spieler B");
+	                spielernameB.setTextFill(Color.web("#FF1919"));
+	                spielernameB.setFont(new Font("Arial", 30));
+	                
+	                //Backend-Code
+	                //Variablen müssen pro Zug angepasst werden
+	                
+	                if(spielerA.isIstAmZug()){
+	                	werIstDran = spielerA.getName();
+	                }else{
+	                	werIstDran = spielerB.getName();
+	                }
+	                //Ende Backend-Code
+	                
+	                
+	                Label istAmZug = new Label("Spieler '" + werIstDran +"' ist am Zug.");
+	                istAmZug.setTextFill(Color.ANTIQUEWHITE);
+	                istAmZug.setFont(new Font ("Arial", 22));
 	        		
 	        		Button buttonA = new Button();
 	                buttonA.setText("0");
@@ -286,28 +335,36 @@ public class StartGUI extends Application {
 	                grid.setHgap(20);
 	                grid.setVgap(20);
 	                grid.setPadding(new Insets(25, 25, 25, 25));
-	                grid.setGridLinesVisible(true);
+	              //  grid.setGridLinesVisible(true);
 	                
-	                grid.add(buttonA, 1, 1, 1, 2);
-	                grid.add(button1, 2, 1);
-	                grid.add(button2, 3, 1);
-	                grid.add(button3, 4, 1);
-	                grid.add(button4, 5, 1);
-	                grid.add(button5, 6, 1);
-	                grid.add(button6, 7, 1);
+	                grid.add(spielernameA, 1, 1, 1, 1);
+	                grid.add(spielernameB, 8, 1, 1, 1);
+	                grid.add(istAmZug, 4, 1, 4, 1);
 	                
-	                grid.add(button7, 2, 2);
-	                grid.add(button8, 3, 2);
-	                grid.add(button9, 4, 2);
-	                grid.add(button10, 5, 2);
-	                grid.add(button11, 6, 2);
-	                grid.add(button12, 7, 2);
-	                grid.add(buttonB, 8, 1 , 1, 2);
+	                grid.add(buttonA, 1, 2, 1, 2);
+	                grid.add(button1, 2, 2);
+	                grid.add(button2, 3, 2);
+	                grid.add(button3, 4, 2);
+	                grid.add(button4, 5, 2);
+	                grid.add(button5, 6, 2);
+	                grid.add(button6, 7, 2);
+	                
+	                grid.add(button7, 2, 3);
+	                grid.add(button8, 3, 3);
+	                grid.add(button9, 4, 3);
+	                grid.add(button10, 5, 3);
+	                grid.add(button11, 6, 3);
+	                grid.add(button12, 7, 3);
+	                grid.add(buttonB, 8, 2 , 1, 2);
+	                
+	              
 	                
 	                
 	                
 	                Scene scene = new Scene(grid, 300, 275);
+	                
 	                spielStage.setScene(scene);
+	               
 	                spielStage.setMinHeight(700);
 	                spielStage.setMinWidth(1200);
 	                scene.getStylesheets().add
