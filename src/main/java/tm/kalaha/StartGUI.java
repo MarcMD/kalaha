@@ -143,13 +143,15 @@ public class StartGUI extends Application {
 	        		
 	        		Button buttonA = new Button();
 	                buttonA.setText("0");
-	                buttonA.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                buttonA.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                buttonA.setMinWidth(120);
 	                buttonA.setMinHeight(260);
 	                
 	                Button button1 = new Button();
 	                button1.setText("4");
-	                button1.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                button1.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                button1.setMinWidth(120);
 	                button1.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -163,7 +165,8 @@ public class StartGUI extends Application {
 	                
 	                Button button2 = new Button();
 	                button2.setText("4");
-	                button2.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                button2.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                button2.setMinWidth(120);
 	                button2.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -177,7 +180,8 @@ public class StartGUI extends Application {
 	                
 	                Button button3 = new Button();
 	                button3.setText("4");
-	                button3.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                button3.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                button3.setMinWidth(120);
 	                button3.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -191,7 +195,8 @@ public class StartGUI extends Application {
 	                
 	                Button button4 = new Button();
 	                button4.setText("4");
-	                button4.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                button4.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                button4.setMinWidth(120);
 	                button4.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -205,7 +210,8 @@ public class StartGUI extends Application {
 	                
 	                Button button5 = new Button();
 	                button5.setText("4");
-	                button5.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                button5.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                button5.setMinWidth(120);
 	                button5.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -219,7 +225,8 @@ public class StartGUI extends Application {
 	                
 	                Button button6 = new Button();
 	                button6.setText("4");
-	                button6.setStyle("-fx-font: 22 arial; -fx-base: #FFFF66;");
+	                button6.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
 	                button6.setMinWidth(120);
 	                button6.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -233,7 +240,8 @@ public class StartGUI extends Application {
 	                
 	                Button button7 = new Button();
 	                button7.setText("4");
-	                button7.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                button7.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                button7.setMinWidth(120);
 	                button7.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -247,7 +255,8 @@ public class StartGUI extends Application {
 	                
 	                Button button8 = new Button();
 	                button8.setText("4");
-	                button8.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                button8.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                button8.setMinWidth(120);
 	                button8.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -261,7 +270,8 @@ public class StartGUI extends Application {
 	                
 	                Button button9 = new Button();
 	                button9.setText("4");
-	                button9.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                button9.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                button9.setMinWidth(120);
 	                button9.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -275,7 +285,8 @@ public class StartGUI extends Application {
 	                
 	                Button button10 = new Button();
 	                button10.setText("4");
-	                button10.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                button10.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                button10.setMinWidth(120);
 	                button10.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -289,7 +300,8 @@ public class StartGUI extends Application {
 	                
 	                Button button11 = new Button();
 	                button11.setText("4");
-	                button11.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                button11.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                button11.setMinWidth(120);
 	                button11.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -303,7 +315,8 @@ public class StartGUI extends Application {
 	                
 	                Button button12 = new Button();
 	                button12.setText("4");
-	                button12.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                button12.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                button12.setMinWidth(120);
 	                button12.setMinHeight(120);
 	                //EventHandler for Buttons
@@ -317,7 +330,8 @@ public class StartGUI extends Application {
 	                
 	                Button buttonB = new Button();
 	                buttonB.setText("0");
-	                buttonB.setStyle("-fx-font: 22 arial; -fx-base: #FF1919;");
+	                buttonB.getStylesheets().add
+	                 (StartGUI.class.getResource("ButtonRed.css").toExternalForm());
 	                buttonB.setMinWidth(120);
 	                buttonB.setMinHeight(260);
 	                //EventHandler for Buttons
