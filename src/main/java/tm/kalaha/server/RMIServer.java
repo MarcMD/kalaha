@@ -31,10 +31,7 @@ public class RMIServer extends UnicastRemoteObject implements Schnittstelle {
 		}
 	}
 	
-	public void setString(String s) throws RemoteException {
-		System.out.println("nachricht vom Client erhalten " +s);
-	}
-	
+
 	public static void main(String[] args) {
 		try {
 			new RMIServer();
@@ -46,6 +43,10 @@ public class RMIServer extends UnicastRemoteObject implements Schnittstelle {
 		}
 	}
 
+	public void setString(String s) throws RemoteException {
+		System.out.println("nachricht vom Client erhalten " +s);
+	}
+	
 	@Override
 	public String verdoppeln(String str) throws RemoteException {
 		return str+" "+str;
