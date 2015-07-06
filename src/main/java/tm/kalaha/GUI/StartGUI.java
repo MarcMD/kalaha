@@ -22,6 +22,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+
 
 
 @SuppressWarnings({ "restriction" })
@@ -384,6 +386,32 @@ public class StartGUI extends Application {
 	                scene.getStylesheets().add
 	                 (StartGUI.class.getResource("Background.css").toExternalForm());
 	                spielStage.show();
+	                
+	                GridPane gridWarten = new GridPane();
+	    	        gridWarten.setAlignment(Pos.CENTER);
+	    	        gridWarten.setHgap(100);
+	    	        gridWarten.setVgap(100);
+	    	        gridWarten.setPadding(new Insets(25, 25, 25, 25));
+	    	        //grid.setGridLinesVisible(true);
+	                
+	                Stage wartenAufSpieler2 = new Stage();
+	                wartenAufSpieler2.setTitle("Warten auf Gegenspieler");
+	                wartenAufSpieler2.initOwner(spielStage); //BLockiert spielStage
+	                wartenAufSpieler2.initModality(Modality.WINDOW_MODAL);//BLockiert spielStage
+	                wartenAufSpieler2.show();
+	                
+	                
+	                Scene sceneWarten = new Scene(gridWarten,300,275);
+	                wartenAufSpieler2.setScene(sceneWarten);
+	                wartenAufSpieler2.setMinHeight(800);
+	                wartenAufSpieler2.setMinWidth(1300);
+	             
+	                sceneWarten.getStylesheets().add
+	                 (StartGUI.class.getResource("WarteBackground.css").toExternalForm());
+	                Text warteText = new Text("Warten auf Spieler2 ...");
+	    	        warteText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 30));
+	    	        warteText.setFill(Color.BLACK);
+	                gridWarten.add(warteText, 4, 2, 2,1);	                
 	                anmeldungsStage.hide();
 	            	
 	                actiontarget.setFill(Color.FIREBRICK);
