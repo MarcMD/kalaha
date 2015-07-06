@@ -1,4 +1,4 @@
-package tm.kalaha;
+package tm.kalaha.GUI;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;

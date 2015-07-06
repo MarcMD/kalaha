@@ -1,4 +1,4 @@
-package tm.kalaha;
+package tm.kalaha.GUI;
 
 public class Spieler {
 	
