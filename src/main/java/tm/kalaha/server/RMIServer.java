@@ -31,8 +31,6 @@ public class RMIServer extends UnicastRemoteObject implements Schnittstelle {
 		}
 	}
 	
-	//Die in der Remite-Schnittstelle RMI-Server deklatierte Methode 
-	//setString() muss in der Server-Klasse implementiert werden
 	public void setString(String s) throws RemoteException {
 		System.out.println("nachricht vom Client erhalten " +s);
 	}
@@ -46,11 +44,6 @@ public class RMIServer extends UnicastRemoteObject implements Schnittstelle {
 			e.printStackTrace();
 			System.exit(1);
 		}
-	}
-
-	public String getVersion() throws RemoteException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
