@@ -6,8 +6,6 @@ public class Spiel {
 	
 	public Spiel() {
 		spielbrett = new Spielbrett();
-		spielbrett.getSpielerA().setSpielerName("marc");
-		spielbrett.getSpielerB().setSpielerName("tanja");
 	}
 	
 	public Spielbrett getSpielbrett() {

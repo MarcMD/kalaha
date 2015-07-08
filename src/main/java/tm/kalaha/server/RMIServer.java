@@ -9,7 +9,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import tm.kalaha.serverInterface.ChatException;
+import tm.kalaha.serverInterface.KalahaException;
 import tm.kalaha.serverInterface.RMIClientInterface;
 import tm.kalaha.serverInterface.ServerInterface;
 
@@ -21,21 +21,17 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	private static final String SERVICE_NAME = "RMI-Server";
 	
 	private Spiel meinSpiel = new Spiel();
-	
-	Daten meineDaten = null;
-	
+		
 	//Speichern der angemeldeten Clients
-	private Vector<RMIClientInterface> clients = null;
+	private RMIClientInterface clientA = null;
+	private RMIClientInterface clientB = null;
 	
 	public RMIServer() throws RemoteException {
 		String bindURL = null;
-		meineDaten = new Daten(1,3);
 		try {
 			bindURL = "rmi://" +HOST + "/" + SERVICE_NAME;
 			LocateRegistry.createRegistry(1099);
-			Naming.rebind(bindURL, this);
-			
-			clients = new Vector<RMIClientInterface>();
+			Naming.rebind(bindURL, this);			
 			System.out.println("RMI-Server gebunden unter dem Namen: " +SERVICE_NAME);
 			System.out.println("RMI-Server ist bereit ...");
 		} catch (MalformedURLException e) {
@@ -59,69 +55,48 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 
 
 	@Override
-	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, ChatException {
-		String msg = null;
+	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, KalahaException {
 		
-		if(angemeldet(client.getName())) {
-			msg = client.getName() + "schon vergeben";
-			throw new ChatException(msg);
+		if(clientA == null) {
+			clientA = client;
+			meinSpiel.getSpielbrett().getSpielerA().setSpielerName(client.getSpielerName());
+		} else if(clientB == null && !clientA.getSpielerName().equals(client.getSpielerName())) {
+			clientB = client;
+			meinSpiel.getSpielbrett().getSpielerB().setSpielerName(client.getSpielerName());
+		} else {
+			throw new KalahaException("Bereits zwei Spieler angemeldet");
 		}
-		
-		clients.add(client);
-		
-		msg = "Willkommen auf RMIChat. Zum Abmelden \"Exit\" eingeben.";
-		client.sendeNachricht(msg);
-		
-		for(RMIClientInterface c: clients) {
-			msg = "\n" + c.getName() + " hat sich angemeldet.";
-			c.sendeNachricht(msg);
-		}
-		this.sendeSpielbrett();
-		printStatus();		
+		sendeSpielbrett();
 	}
 	
 	@Override
-	public synchronized void abmelden(RMIClientInterface client) throws RemoteException, ChatException {
-		String msg = null;
-		if(!angemeldet(client.getName())) {
-			msg = "Client " +client.getName() + " ist nicht angemeldet.";
-			throw new ChatException(msg);
-		}
-		msg = client.getName() + " hat sich abgemeldet.";
-		clients.remove(client);
-		for(RMIClientInterface c: clients) {
-			c.sendeNachricht(msg);
-		}
-		printStatus();		
+	public synchronized void abmelden(RMIClientInterface client) throws RemoteException, KalahaException {
+//		String msg = null;
+//		if(!angemeldet(client.getSpielerName())) {
+//			msg = "Client " +client.getSpielerName() + " ist nicht angemeldet.";
+//			throw new KalahaException(msg);
+//		}
+//		msg = client.getSpielerName() + " hat sich abgemeldet.";
+//		clients.remove(client);
+//		for(RMIClientInterface c: clients) {
+//			c.sendeNachricht(msg);
+//		}
+//		printStatus();		
 	}
 
 
 	private void printStatus() throws RemoteException {
-		Calendar cal = GregorianCalendar.getInstance();
-		String msg = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND) + "Uhr: ";
-		msg += clients.size() + "User aktuell online:";
-		for(RMIClientInterface c: clients) {
-			msg += c.getName() + " ";
-		}
-		System.out.println(msg);
+//		Calendar cal = GregorianCalendar.getInstance();
+//		String msg = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND) + "Uhr: ";
+//		msg += clients.size() + "User aktuell online:";
+//		for(RMIClientInterface c: clients) {
+//			msg += c.getSpielerName() + " ";
+//		}
+//		System.out.println(msg);
 	}
-	
-	private boolean angemeldet(String name) throws RemoteException {
-		for(RMIClientInterface c: clients) {
-			if(name.equalsIgnoreCase(c.getName())) {
-				return true;
-			}
-		}
-		return false;
-	}
-	
-	public Daten getData() throws RemoteException {
-		return meineDaten;
-	}
-	
+			
 	private void sendeSpielbrett() throws RemoteException {
-		for(RMIClientInterface c: clients) {
-			c.spielbrettBekommen(meinSpiel.getSpielbrett());
-		}
+		clientA.spielbrettBekommen(meinSpiel.getSpielbrett());
+		clientB.spielbrettBekommen(meinSpiel.getSpielbrett());
 	}
 }

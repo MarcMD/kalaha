@@ -7,10 +7,8 @@ import tm.kalaha.server.Daten;
 
 public interface ServerInterface extends Remote {
 	
-	public void anmelden (RMIClientInterface client) throws RemoteException, ChatException;
+	public void anmelden (RMIClientInterface client) throws RemoteException, KalahaException;
 		
-	public void abmelden (RMIClientInterface client) throws RemoteException, ChatException;
-	
-	public Daten getData() throws RemoteException;
-	
+	public void abmelden (RMIClientInterface client) throws RemoteException, KalahaException;
+		
 }

@@ -8,7 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
 import tm.kalaha.server.Spielbrett;
-import tm.kalaha.serverInterface.ChatException;
+import tm.kalaha.serverInterface.KalahaException;
 import tm.kalaha.serverInterface.RMIClientInterface;
 import tm.kalaha.serverInterface.ServerInterface;
 
@@ -17,20 +17,16 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private static final long serialVersionUID = 6487865781693539839L;
 	private static final String HOST ="localhost";
 	private static final String BIND_NAME = "RMI-Server";
-	private String spielerName;
 	
+	private String spielerName;
 	private Spielbrett spielbrett = null;
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
 	}
 	
-	public String getName() {
+	public String getSpielerName() {
 		return spielerName;
-	}
-	
-	public void sendeNachricht(String msg) throws RemoteException {
-		System.out.println(msg);
 	}
 	
 	public void run() {
@@ -54,11 +50,13 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 			System.out.println(e.getStackTrace());
 		}
 		
-		//Anmelden und chatten
 		try {
 			server.anmelden(this);
-			server.abmelden(this);
-		} catch (ChatException e) {
+//			while(true) {
+//				
+//			}
+//			server.abmelden(this);
+		} catch (KalahaException e) {
 			System.out.println(e.getMessage());
 		} catch (RemoteException e) {
 			System.out.println(e.getMessage());
@@ -68,7 +66,11 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	@Override
 	public void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
-		System.out.println(spielbrett.getSpielerA().getSpielerName());
-		System.out.println(spielbrett.getSpielerB().getSpielerName());
+		brettAusgeben();
+	}
+	
+	private void brettAusgeben() {
+		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
+		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
 	}
 }
