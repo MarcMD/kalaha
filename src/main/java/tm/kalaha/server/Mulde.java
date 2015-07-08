@@ -8,9 +8,7 @@ public class Mulde implements Serializable {
 	
 	private int anzahlSteine = 4;
 
-	public Mulde() {
-		// TODO Auto-generated constructor stub
-	}
+	public Mulde() {}
 
 	public int getAnzahlSteine() {
 		return anzahlSteine;

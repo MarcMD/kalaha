@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import tm.kalaha.server.Spielbrett;
 import tm.kalaha.serverInterface.ChatException;
 import tm.kalaha.serverInterface.RMIClientInterface;
 import tm.kalaha.serverInterface.ServerInterface;
@@ -16,14 +17,16 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private static final long serialVersionUID = 6487865781693539839L;
 	private static final String HOST ="localhost";
 	private static final String BIND_NAME = "RMI-Server";
-	private String name;
+	private String spielerName;
+	
+	private Spielbrett spielbrett = null;
 	
 	public RMIClient (String n) throws RemoteException {
-		name = n;
+		spielerName = n;
 	}
 	
 	public String getName() {
-		return name;
+		return spielerName;
 	}
 	
 	public void sendeNachricht(String msg) throws RemoteException {
@@ -60,5 +63,12 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		} catch (RemoteException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+
+	@Override
+	public void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
+		this.spielbrett = spielbrett;
+		System.out.println(spielbrett.getSpielerA().getSpielerName());
+		System.out.println(spielbrett.getSpielerB().getSpielerName());
 	}
 }

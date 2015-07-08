@@ -10,9 +10,7 @@ public class Spielbrett implements Serializable {
 	private Spieler spielerA = new Spieler();
 	private Spieler spielerB = new Spieler();
 
-	public Spielbrett() {
-		// TODO Auto-generated constructor stub
-	}
+	public Spielbrett() {}
 
 	public Mulde[] getMulden() {
 		return mulden;

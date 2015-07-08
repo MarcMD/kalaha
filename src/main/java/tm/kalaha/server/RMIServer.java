@@ -20,6 +20,8 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	private static final String HOST = "localhost";
 	private static final String SERVICE_NAME = "RMI-Server";
 	
+	private Spiel meinSpiel = new Spiel();
+	
 	Daten meineDaten = null;
 	
 	//Speichern der angemeldeten Clients
@@ -74,6 +76,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 			msg = "\n" + c.getName() + " hat sich angemeldet.";
 			c.sendeNachricht(msg);
 		}
+		this.sendeSpielbrett();
 		printStatus();		
 	}
 	
@@ -114,5 +117,11 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	
 	public Daten getData() throws RemoteException {
 		return meineDaten;
+	}
+	
+	private void sendeSpielbrett() throws RemoteException {
+		for(RMIClientInterface c: clients) {
+			c.spielbrettBekommen(meinSpiel.getSpielbrett());
+		}
 	}
 }

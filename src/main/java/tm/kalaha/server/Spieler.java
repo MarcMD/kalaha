@@ -12,9 +12,7 @@ public class Spieler implements Serializable {
 	private String fehlerMeldung = null;
 	private boolean hatGewonnen = false;
 
-	public Spieler() {
-		// TODO Auto-generated constructor stub
-	}
+	public Spieler() {}
 
 	public String getSpielerName() {
 		return spielerName;
