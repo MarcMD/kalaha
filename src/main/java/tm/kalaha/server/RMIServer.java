@@ -20,11 +20,14 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	private static final String HOST = "localhost";
 	private static final String SERVICE_NAME = "RMI-Server";
 	
+	Daten meineDaten = null;
+	
 	//Speichern der angemeldeten Clients
 	private Vector<RMIClientInterface> clients = null;
 	
 	public RMIServer() throws RemoteException {
 		String bindURL = null;
+		meineDaten = new Daten(1,3);
 		try {
 			bindURL = "rmi://" +HOST + "/" + SERVICE_NAME;
 			LocateRegistry.createRegistry(1099);
@@ -73,24 +76,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		}
 		printStatus();		
 	}
-
-
-	@Override
-	public synchronized void sendeNachricht(RMIClientInterface client, String nachricht) throws RemoteException, ChatException {
-		String msg = null;
-		if(!angemeldet(client.getName())) {
-			msg = "Client " +client.getName() + " ist nicht angemeldet.";
-			throw new ChatException(msg);
-		}
-		
-		msg = client.getName() + " schreibt: " + nachricht;
-		
-		for(RMIClientInterface c: clients) {
-			c.sendeNachricht("\n" +msg);
-		}
-	}
-
-
+	
 	@Override
 	public synchronized void abmelden(RMIClientInterface client) throws RemoteException, ChatException {
 		String msg = null;
@@ -124,5 +110,9 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 			}
 		}
 		return false;
+	}
+	
+	public Daten getData() throws RemoteException {
+		return meineDaten;
 	}
 }

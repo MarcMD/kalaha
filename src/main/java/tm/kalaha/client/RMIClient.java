@@ -54,16 +54,9 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		//Anmelden und chatten
 		try {
 			server.anmelden(this);
-			Scanner sc = new Scanner(System.in);
-			String msg = null; 
-			while(true) {
-				msg = sc.nextLine();
-				if(msg.equalsIgnoreCase(("exit"))) {
-					break;
-				}
-				server.sendeNachricht(this, msg);
-			}
-			sc.close();
+			
+			System.out.println(server.getData().toString());
+
 			server.abmelden(this);
 		} catch (ChatException e) {
 			System.out.println(e.getMessage());
