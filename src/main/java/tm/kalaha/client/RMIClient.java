@@ -27,7 +27,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	}
 	
 	public void sendeNachricht(String msg) throws RemoteException {
-		System.out.println(msg + "\n Eingabe: ");
+		System.out.println(msg);
 	}
 	
 	public void run() {
@@ -54,9 +54,6 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		//Anmelden und chatten
 		try {
 			server.anmelden(this);
-			
-			System.out.println(server.getData().toString());
-
 			server.abmelden(this);
 		} catch (ChatException e) {
 			System.out.println(e.getMessage());
