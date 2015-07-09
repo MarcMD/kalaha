@@ -22,6 +22,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Menu;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyEvent;
+
 
 
 @SuppressWarnings({ "restriction" })
@@ -42,23 +46,6 @@ public class StartGUI extends Application {
 	    public void start(Stage anmeldungsStage) {
 	        anmeldungsStage.setTitle("Kalaha");
 	        spielerA.setIstAmZug(true);
-	        
-	        //Hello World Code-----Start
-//	        Button btn = new Button();
-//	        btn.setText("Say 'Hello World'");
-//	        //EventHandler for Buttons
-//	        btn.setOnAction(new EventHandler<ActionEvent>() {
-//	 
-//	            @Override
-//	            public void handle(ActionEvent event) {
-//	                System.out.println("Hello World!");
-//	            }
-//	        });
-//	        
-//	        StackPane root = new StackPane();
-//	        root.getChildren().add(btn);
-//	        primaryStage.setScene(new Scene(root, 300, 250));
-	        //------End
 
 	        //GridLayout
 	        GridPane grid = new GridPane();
@@ -83,7 +70,7 @@ public class StartGUI extends Application {
 	        
 	        Button btn = new Button("Anmelden");
 	        btn.setTextFill(Color.BROWN);
-	        btn.setStyle(" -fx-base: #FFFFFA;");
+	        btn.setStyle(" -fx-base: #FFFFFA; -fx-back");
 	        HBox hbBtn = new HBox(10);
 	        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
 	        hbBtn.getChildren().add(btn);
@@ -342,6 +329,7 @@ public class StartGUI extends Application {
 	                        buttonB.setText("0");
 	                    }
 	                });
+	      
 	                
 	                GridPane grid = new GridPane();
 	               
@@ -371,9 +359,6 @@ public class StartGUI extends Application {
 	                grid.add(button12, 7, 3);
 	                grid.add(buttonB, 8, 2 , 1, 2);
 	                
-	              
-	                
-	                
 	                
 	                Scene scene = new Scene(grid, 300, 275);
 	                
@@ -383,7 +368,37 @@ public class StartGUI extends Application {
 	                spielStage.setMinWidth(1200);
 	                scene.getStylesheets().add
 	                 (StartGUI.class.getResource("Background.css").toExternalForm());
+	                spielStage.setX(50);
+	                spielStage.setY(50);
 	                spielStage.show();
+	                
+	                GridPane gridWarten = new GridPane();
+	    	        gridWarten.setAlignment(Pos.CENTER);
+	    	        gridWarten.setHgap(100);
+	    	        gridWarten.setVgap(100);
+	    	        gridWarten.setPadding(new Insets(25, 25, 25, 25));
+	    	        //grid.setGridLinesVisible(true);
+	                
+	                Stage wartenAufSpieler2 = new Stage();
+	                wartenAufSpieler2.setTitle("Warten auf Gegenspieler");
+	                wartenAufSpieler2.initOwner(spielStage); //BLockiert spielStage
+	                wartenAufSpieler2.initModality(Modality.WINDOW_MODAL);//BLockiert spielStage
+	                wartenAufSpieler2.setX(spielStage.getX() + spielStage.getWidth() / 2 - wartenAufSpieler2.getWidth() / 2);
+	                wartenAufSpieler2.setY(spielStage.getY() + spielStage.getHeight() / 2 - wartenAufSpieler2.getHeight() / 2);
+	                wartenAufSpieler2.show();
+	                
+	                
+	                Scene sceneWarten = new Scene(gridWarten,300,275);
+	                wartenAufSpieler2.setScene(sceneWarten);
+	                wartenAufSpieler2.setMinHeight(350);
+	                wartenAufSpieler2.setMinWidth(600);
+	             
+	                sceneWarten.getStylesheets().add
+	                 (StartGUI.class.getResource("WarteBackground.css").toExternalForm());
+	                Text warteText = new Text("Warten auf Spieler2 ...");
+	    	        warteText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 26));
+	    	        warteText.setFill(Color.BLACK);
+	                gridWarten.add(warteText, 4, 2, 2,1);	                
 	                anmeldungsStage.hide();
 	            	
 	                actiontarget.setFill(Color.FIREBRICK);
