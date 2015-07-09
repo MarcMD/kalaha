@@ -10,13 +10,13 @@ public class RMIRun {
 		
 		try {
 			System.out.println("Erstelle Thread ...");
-			Thread t1 = new Thread (new RMIClient("marc"));
+			Thread t1 = new Thread (new RMIClient("tanja"));
 			t1.start();
 
 			System.out.println("Thread gestartet");
 			//warten bis der Thread zu Ende gelaufen ist
 			t1.join();
-			System.exit(0);
+			//System.exit(0);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
