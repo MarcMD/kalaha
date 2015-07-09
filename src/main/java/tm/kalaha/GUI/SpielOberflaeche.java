@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.control.TextArea;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.text.FontPosture;
@@ -72,32 +73,7 @@ public class SpielOberflaeche extends Application {
 		        
 //------------> Ende Anmeldungs Scene
 		        
-//------------>	Start Warte Scene
-		        GridPane gridWarten = new GridPane();
-    	        gridWarten.setAlignment(Pos.CENTER);
-    	        gridWarten.setHgap(100);
-    	        gridWarten.setVgap(100);
-    	        gridWarten.setPadding(new Insets(25, 25, 25, 25));
-    	        //grid.setGridLinesVisible(true);
-    	        
-		        Text warteText = new Text("Warten auf Spieler2 ...");
-               	warteText.setFont(Font.font("Tahoma", FontWeight.BOLD, 22));
-   	        	warteText.setFill(Color.BLACK);
-   	        	gridWarten.add(warteText, 1, 1, 1,1);	 
-   	        	
-   	        	Button mockButton = new Button();
-   	        	mockButton.setText("MockAction");
-   	        	double r=30;
-   	        	mockButton.setShape(new Circle(r));
-   	        	mockButton.setMinSize(2*r, 2*r);
-   	        	mockButton.setMaxSize(2*r, 2*r);
-   	        	gridWarten.add(mockButton, 1, 2,1 ,1 );
-   	        	
-   	        	
-   	        	aufSpielerWarten = new Scene(gridWarten, 400, 400);
-   	        	aufSpielerWarten.getStylesheets().add
-                (StartGUI.class.getResource("Background.css").toExternalForm());
-//------------>	Ende Warte Scene	   
+
    	        	
 //------------> Start Spielfeld Scene
    	        	Label spielernameA = new Label("Tanja");
@@ -111,6 +87,29 @@ public class SpielOberflaeche extends Application {
                 Label istAmZug = new Label("Spieler 'DummyText' ist am Zug.");
                 istAmZug.setTextFill(Color.ANTIQUEWHITE);
                 istAmZug.setFont(Font.font("Arial", FontPosture.ITALIC, 22));
+                
+                Label fehlerAusgabe = new Label("Ausgabe der Fehlermeldung oder Warten auf Spieler 2...");
+                fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
+                fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+                
+                Label textEingabe = new Label("Eingabe:");
+                textEingabe.setTextFill(Color.ANTIQUEWHITE);
+                textEingabe.setFont(Font.font("Arial", FontPosture.ITALIC, 16));
+                
+                TextArea outputTxt;
+                TextField inputTxt;
+                
+                outputTxt = new TextArea();
+//              outputTxt.setMinSize(400, 400);
+                outputTxt.setDisable(false);
+                outputTxt.setEditable(false);
+                outputTxt.setFocusTraversable(false);
+                outputTxt.setText("TestChatText...");
+
+                inputTxt = new TextField();
+                inputTxt.setFocusTraversable(true);
+//              inputTxt.setMinSize(400, 30);
+               
    	        	
                 Button buttonA = new Button();
                 buttonA.setText("0");
@@ -123,6 +122,7 @@ public class SpielOberflaeche extends Application {
                 
                 Button button1 = new Button();
                 button1.setText("4");
+                double r = 30;
                 button1.setShape(new Circle(r));
    	        	button1.setMinSize(2*r, 2*r);
    	        	button1.setMaxSize(2*r, 2*r);
@@ -353,6 +353,8 @@ public class SpielOberflaeche extends Application {
                     }
                 });
                 
+                
+                
                 GridPane gridSpielfeld = new GridPane();
 	               
                 gridSpielfeld.setAlignment(Pos.CENTER);
@@ -381,6 +383,12 @@ public class SpielOberflaeche extends Application {
                 gridSpielfeld.add(button12, 7, 3);
                 gridSpielfeld.add(buttonB, 8, 2 , 1, 2);
                 
+                gridSpielfeld.add(fehlerAusgabe, 3, 4, 4, 1);
+                gridSpielfeld.add(textEingabe, 2, 6);
+                
+                gridSpielfeld.add(outputTxt, 3, 5, 4, 1);
+                gridSpielfeld.add(inputTxt, 3, 6, 4, 1);
+                
                 spielfeld = new Scene(gridSpielfeld, 1200, 700);
                 spielfeld.getStylesheets().add
                 (StartGUI.class.getResource("Background.css").toExternalForm());
@@ -394,7 +402,7 @@ public class SpielOberflaeche extends Application {
 		        
 		        	@Override
 			        public void handle(ActionEvent e) {
-		        		hauptfenster.setScene(aufSpielerWarten);
+		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
 		        		/*
 		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
@@ -403,22 +411,7 @@ public class SpielOberflaeche extends Application {
 
 		        	}
 		        });
-		        
-		        mockButton.setOnAction(new EventHandler<ActionEvent>() {
-		            
-                    @Override
-                    public void handle(ActionEvent event) {
-                        mockButton.setText("0");
-                        hauptfenster.setScene(spielfeld);
-                        hauptfenster.centerOnScreen();
-                
-                    }
-                });
-		       
-		        	
-		        
 
-		    	
 		    }
 
 }
