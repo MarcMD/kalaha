@@ -20,8 +20,6 @@ public class HauptGUI extends Application{
 	    }
 	 
 	 
-
-	@Override
 	public void start(Stage spielStage) throws Exception {
 		
 		spielStage.setTitle("Kalaha");
@@ -247,6 +245,7 @@ public class HauptGUI extends Application{
         scene.getStylesheets().add
          (StartGUI.class.getResource("Background.css").toExternalForm());
 //        spielStage.show();
+		
 		
 	}
 	
