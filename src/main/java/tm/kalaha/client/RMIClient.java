@@ -54,14 +54,13 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		
 		try {
 			server.anmelden(this);
-			System.out.println("angemeldet");
-//			server.muldeSpielen("marc", 2);
-//			System.out.println("Neues Spiel");
-//			server.neuesSpielStarten("marc");
+			server.muldeSpielen("marc", 2);
+			System.out.println("Neues Spiel");
+			server.neuesSpielStarten("marc");
 //			while(true) {
 //				
 //			}
-//			server.abmelden(this);
+			server.abmelden(this);
 		} catch (KalahaException e) {
 			System.out.println(e.getMessage());
 		} catch (RemoteException e) {
@@ -74,7 +73,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	}
 
 	@Override
-	public void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
+	public synchronized void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
 		brettAusgeben();
 	}

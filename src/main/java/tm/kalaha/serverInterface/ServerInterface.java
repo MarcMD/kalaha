@@ -14,4 +14,5 @@ public interface ServerInterface extends Remote {
 	public void muldeSpielen(String spielerName, int muldenNummer) throws RemoteException, KalahaException;
 	
 	public void neuesSpielStarten(String spielerName) throws RemoteException;
+
 }

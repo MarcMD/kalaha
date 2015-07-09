@@ -57,18 +57,22 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	@Override
 	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, KalahaException {
 		
+		System.out.println("Client meldet sich an");
 		if(angemeldet(client)) {
 			//TODO Fehlermeldung
-			System.out.println("Name ist schon vergeben");
+			System.out.println("Gewählter Name ist schon vergeben");
 			throw new KalahaException("Spielername ist schon vergeben");
 		} else {
 			if(clientA == null) {
+				System.out.println("ClientA wird angemeldet: "+client.getSpielerName());
 				clientA = client;
 				meinSpiel.getSpielbrett().getSpielerA().setSpielerName(client.getSpielerName());
-			} else if(clientB == null && !clientA.getSpielerName().equals(client.getSpielerName())) {
+			} else if(clientB == null && !clientA.equals(client)) {
+				System.out.println("ClientB wird angemeldet: "+client.getSpielerName());
 				clientB = client;
 				meinSpiel.getSpielbrett().getSpielerB().setSpielerName(client.getSpielerName());
 			} else {
+				System.out.println("Bereits zwei Spieler angemeldet");
 				throw new KalahaException("Bereits zwei Spieler angemeldet");
 			}
 		}
@@ -77,12 +81,12 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	
 	private synchronized boolean angemeldet(RMIClientInterface client) throws RemoteException {
 		if(clientA != null) {
-			if(client.getSpielerName().equals(clientA.getSpielerName())) {
+			if(clientA.equals(client)) {
 				return true;
 			}
 		}
 		if(clientB != null) {
-			if(client.getSpielerName().equals(clientB.getSpielerName())) {
+			if(clientB.equals(client)) {
 				return true;
 			}
 		}
@@ -91,7 +95,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 
 
 	@Override
-	public synchronized void abmelden(RMIClientInterface client) throws RemoteException, KalahaException {
+	public synchronized void abmelden(RMIClientInterface client) {
 		if(clientA.equals(client)) {
 			clientA = null;
 			meinSpiel.getSpielbrett().getSpielerA().setSpielerName(null);
@@ -124,25 +128,37 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 //		System.out.println(msg);
 	}
 			
-	private void sendeSpielbrett() throws RemoteException {
-		 clientA.spielbrettBekommen(meinSpiel.getSpielbrett());
-		 clientB.spielbrettBekommen(meinSpiel.getSpielbrett());
+	public synchronized void sendeSpielbrett() {
+			try {
+				System.out.println("Spielbrett an ClientA schicken");
+				clientA.spielbrettBekommen(meinSpiel.getSpielbrett());
+				System.out.println("Spielbrett an ClientA geschickt");
+			} catch (Exception e) {
+				System.out.println("Spielbrett konnte nicht an ClientA geschickt werden. ClientA wurde nicht gefunden.");			
+			}
+			try {
+				System.out.println("Spielbrett an ClientB schicken");
+				clientB.spielbrettBekommen(meinSpiel.getSpielbrett());
+				System.out.println("Spielbrett an ClientB geschickt");
+			} catch (Exception e) {
+				System.out.println("Spielbrett konnte nicht an ClientB geschickt werden. ClientB wurde nicht gefunden.");			
+			}
 	}
 
 
 	@Override
 	public synchronized void muldeSpielen(String spielerName, int muldenNummer) throws RemoteException, KalahaException {
+		System.out.println(spielerName + " spielt Mulde "+muldenNummer);
 		meinSpiel.muldeSpieln(spielerName, muldenNummer);
 		sendeSpielbrett();
 	}
 
 
 	@Override
-	public synchronized void neuesSpielStarten(String spielerName) throws RemoteException {
+	public synchronized void neuesSpielStarten(String spielerName) {
 		//TODO Meldung ausgeben
+		System.out.println("Neues Spiel wurde gestartet von " +spielerName);
 		meinSpiel.neuesSpielStarten(spielerName);
 		sendeSpielbrett();
 	}
-	
-	
 }
