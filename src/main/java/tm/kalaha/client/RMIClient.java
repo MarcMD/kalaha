@@ -4,45 +4,86 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.Scanner;
 
-import tm.kalaha.serverInterface.Schnittstelle;
+import tm.kalaha.server.Mulde;
+import tm.kalaha.server.Spielbrett;
+import tm.kalaha.serverInterface.KalahaException;
+import tm.kalaha.serverInterface.RMIClientInterface;
+import tm.kalaha.serverInterface.ServerInterface;
 
-import java.rmi.Remote;
-
-public class RMIClient {
+public class RMIClient extends UnicastRemoteObject implements RMIClientInterface, Runnable {
 	
+	private static final long serialVersionUID = 6487865781693539839L;
 	private static final String HOST ="localhost";
 	private static final String BIND_NAME = "RMI-Server";
 	
-	public static void main (String[] args) {
-		String bindURL ="rmi://"+HOST+"/" +BIND_NAME;
+	private String spielerName;
+	private Spielbrett spielbrett = null;
+	
+	public RMIClient (String n) throws RemoteException {
+		spielerName = n;
+	}
+	
+	public String getSpielerName() {
+		return spielerName;
+	}
+	
+	public void run() {
+		ServerInterface server = null; 
+		//Verbindung aufbauen 
 		try {
-			Schnittstelle server = (Schnittstelle) Naming.lookup(bindURL);
-			System.out.println("Remote-Referenz erfolgreich erhalten.");
-			System.out.println("Server ist gebunden an: "+bindURL);
-			//setString des Server Objektes aufrufen
-			server.setString("HalloServer");
-			System.out.println("Methode setString() des Servers aufgerufen");
-			System.out.println("Methode verdoppeln wird aufgerufen:");
-			System.out.println(server.verdoppeln("HalloWelt"));
-			System.out.println("Methode verdoppeln (int) wird aufgerufen");
-			System.out.println(server.verdoppeln(21));
+			String bindURL = "rmi://"+HOST+"/" +BIND_NAME;
+			server = (ServerInterface) Naming.lookup(bindURL);
+		} catch (NotBoundException e) {
+			System.out.println("Server ist nicht gebunden");
+			System.out.println(e.getMessage());
 		} catch (MalformedURLException e) {
 			System.out.println("URL ungültig:");
 			System.out.println(e.getMessage());
 		} catch (RemoteException e) {
 			System.out.println("Fehler während Kommunikation");
 			System.out.println(e.getMessage());
-		} catch (NotBoundException e) {
-			System.out.println("Server ist nicht gebunden");
-			System.out.println(e.getMessage());
-			System.out.println(e.getStackTrace());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("Sonstiger Fehler"); 
 			System.out.println(e.getMessage());
 			System.out.println(e.getStackTrace());
 		}
+		
+		try {
+			server.anmelden(this);
+			System.out.println("angemeldet");
+//			server.muldeSpielen("marc", 2);
+//			System.out.println("Neues Spiel");
+//			server.neuesSpielStarten("marc");
+//			while(true) {
+//				
+//			}
+//			server.abmelden(this);
+		} catch (KalahaException e) {
+			System.out.println(e.getMessage());
+		} catch (RemoteException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 
+	@Override
+	public void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
+		this.spielbrett = spielbrett;
+		brettAusgeben();
+	}
+	
+	private void brettAusgeben() {
+		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
+		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
+		Mulde[] mulden = spielbrett.getMulden();
+		for(int i =0; i<12; i++) {
+			System.out.print(mulden[i].getAnzahlSteine()+ " ");
+			if(i == 5) {
+				System.out.println("");
+			}
+		}
+		System.out.println("");
+	}
 }
