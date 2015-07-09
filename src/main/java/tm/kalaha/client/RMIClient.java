@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import tm.kalaha.server.Mulde;
 import tm.kalaha.server.Spielbrett;
 import tm.kalaha.serverInterface.KalahaException;
 import tm.kalaha.serverInterface.RMIClientInterface;
@@ -52,6 +53,10 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		
 		try {
 			server.anmelden(this);
+			System.out.println("angemeldet");
+//			server.muldeSpielen("marc", 2);
+//			System.out.println("Neues Spiel");
+//			server.neuesSpielStarten("marc");
 //			while(true) {
 //				
 //			}
@@ -72,5 +77,13 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private void brettAusgeben() {
 		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
 		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
+		Mulde[] mulden = spielbrett.getMulden();
+		for(int i =0; i<12; i++) {
+			System.out.print(mulden[i].getAnzahlSteine()+ " ");
+			if(i == 5) {
+				System.out.println("");
+			}
+		}
+		System.out.println("");
 	}
 }

@@ -10,7 +10,11 @@ public class Spielbrett implements Serializable {
 	private Spieler spielerA = new Spieler();
 	private Spieler spielerB = new Spieler();
 
-	public Spielbrett() {}
+	public Spielbrett() {
+		for(int i=0; i<12; i++) {
+			mulden[i] = new Mulde();
+		}
+	}
 
 	public Mulde[] getMulden() {
 		return mulden;
