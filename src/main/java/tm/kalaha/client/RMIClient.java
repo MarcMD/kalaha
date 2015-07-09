@@ -20,10 +20,11 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private static final String BIND_NAME = "RMI-Server";
 	
 	private String spielerName;
-	private Spielbrett spielbrett = null;
+	private Spielbrett spielbrett = new Spielbrett();
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
+		run();
 	}
 	
 	public String getSpielerName() {
@@ -66,6 +67,10 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		} catch (RemoteException e) {
 			System.out.println(e.getMessage());
 		}
+	}
+	
+	public Spielbrett getSpielbrett(){
+		return spielbrett;
 	}
 
 	@Override

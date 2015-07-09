@@ -1,5 +1,9 @@
 package tm.kalaha.GUI;
 
+import java.rmi.RemoteException;
+
+import tm.kalaha.client.RMIClient;
+import tm.kalaha.server.Spielbrett;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,13 +32,23 @@ public class SpielOberflaeche extends Application {
 	Scene anmeldung = null;
 	Scene aufSpielerWarten = null;
 	Scene spielfeld = null;
+	static RMIClient client;
+									
+			
 	
 		 public static void main(String[] args) {
+			 try {
+				 client = new RMIClient("DummyName");
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		        launch(args);
 		 }
 		    
 		    @Override
 		    public void start(Stage hauptfenster) {
+		    	
 		    	hauptfenster.setTitle("Kalaha");
 		    	hauptfenster.centerOnScreen();
 		    	
@@ -69,28 +83,52 @@ public class SpielOberflaeche extends Application {
 		        
 		        anmeldung = new Scene(gridAnmeldung, 500, 300);
 		        anmeldung.getStylesheets().add
-                (StartGUI.class.getResource("Background.css").toExternalForm());
+                (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
+		        
+		        anmeldungBtn.setOnAction(new EventHandler<ActionEvent>() {
+			        
+		        	@Override
+			        public void handle(ActionEvent e) {
+		        	
+		        		hauptfenster.setScene(spielfeld);
+		        		hauptfenster.centerOnScreen();
+		        		
+		        		/*
+		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
+		        		 * gemeldet wird dass der 2. Spieler da ist
+		        		 */
+
+		        	}
+		        });
 		        
 //------------> Ende Anmeldungs Scene
 		        
 
    	        	
 //------------> Start Spielfeld Scene
-   	        	Label spielernameA = new Label("Tanja");
+   	        	Label spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
                 
-                Label spielernameB = new Label("Julia");
+                Label spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
                 spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 30));
                 
-                Label istAmZug = new Label("Spieler 'DummyText' ist am Zug.");
+                String werIstDran = null;
+                if(client.getSpielbrett().getSpielerA().isIstAmZug()){
+                	werIstDran = client.getSpielbrett().getSpielerA().getSpielerName();
+                }else{
+                	werIstDran = client.getSpielbrett().getSpielerB().getSpielerName();
+                }
+                
+                Label istAmZug = new Label("Spieler '" + werIstDran +"' ist am Zug");
                 istAmZug.setTextFill(Color.ANTIQUEWHITE);
                 istAmZug.setFont(Font.font("Arial", FontPosture.ITALIC, 22));
                 
+                //Mit Backend verknüpfen
                 Label fehlerAusgabe = new Label("Ausgabe der Fehlermeldung oder Warten auf Spieler 2...");
                 fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
-                fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+                fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 18));
                 
                 Label textEingabe = new Label("Eingabe:");
                 textEingabe.setTextFill(Color.ANTIQUEWHITE);
@@ -100,7 +138,6 @@ public class SpielOberflaeche extends Application {
                 TextField inputTxt;
                 
                 outputTxt = new TextArea();
-//              outputTxt.setMinSize(400, 400);
                 outputTxt.setDisable(false);
                 outputTxt.setEditable(false);
                 outputTxt.setFocusTraversable(false);
@@ -108,26 +145,44 @@ public class SpielOberflaeche extends Application {
 
                 inputTxt = new TextField();
                 inputTxt.setFocusTraversable(true);
-//              inputTxt.setMinSize(400, 30);
+                //Mit Backend verknüpfen
                
    	        	
                 Button buttonA = new Button();
-                buttonA.setText("0");
+                buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
                 double radiusSammelMulden =10;
                 buttonA.setShape(new Circle(radiusSammelMulden));
                 buttonA.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 buttonA.setMinWidth(120);
                 buttonA.setMinHeight(260);
                 
-                Button button1 = new Button();
-                button1.setText("4");
+                Button button0 = new Button();
+                button0.setText("" + client.getSpielbrett().getMulden()[0].getAnzahlSteine());
                 double r = 30;
+                button0.setShape(new Circle(r));
+   	        	button0.setMinSize(2*r, 2*r);
+   	        	button0.setMaxSize(2*r, 2*r);
+                button0.getStylesheets().add
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
+                button0.setMinWidth(120);
+                button0.setMinHeight(120);
+                //EventHandler for Buttons
+                button0.setOnAction(new EventHandler<ActionEvent>() {
+         
+                    @Override
+                    public void handle(ActionEvent event) {
+                        button0.setText("0");
+                    }
+                });
+                
+                Button button1 = new Button();
+                button1.setText("" + client.getSpielbrett().getMulden()[1].getAnzahlSteine());
                 button1.setShape(new Circle(r));
    	        	button1.setMinSize(2*r, 2*r);
    	        	button1.setMaxSize(2*r, 2*r);
                 button1.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button1.setMinWidth(120);
                 button1.setMinHeight(120);
                 //EventHandler for Buttons
@@ -140,12 +195,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button2 = new Button();
-                button2.setText("4");
+                button2.setText("" + client.getSpielbrett().getMulden()[2].getAnzahlSteine());
                 button2.setShape(new Circle(r));
    	        	button2.setMinSize(2*r, 2*r);
    	        	button2.setMaxSize(2*r, 2*r);
                 button2.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button2.setMinWidth(120);
                 button2.setMinHeight(120);
                 //EventHandler for Buttons
@@ -158,12 +213,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button3 = new Button();
-                button3.setText("4");
+                button3.setText("" + client.getSpielbrett().getMulden()[3].getAnzahlSteine());
                 button3.setShape(new Circle(r));
    	        	button3.setMinSize(2*r, 2*r);
    	        	button3.setMaxSize(2*r, 2*r);
                 button3.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button3.setMinWidth(120);
                 button3.setMinHeight(120);
                 //EventHandler for Buttons
@@ -176,12 +231,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button4 = new Button();
-                button4.setText("4");
+                button4.setText("" + client.getSpielbrett().getMulden()[4].getAnzahlSteine());
                 button4.setShape(new Circle(r));
    	        	button4.setMinSize(2*r, 2*r);
    	        	button4.setMaxSize(2*r, 2*r);
                 button4.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button4.setMinWidth(120);
                 button4.setMinHeight(120);
                 //EventHandler for Buttons
@@ -194,12 +249,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button5 = new Button();
-                button5.setText("4");
+                button5.setText("" + client.getSpielbrett().getMulden()[5].getAnzahlSteine());
                 button5.setShape(new Circle(r));
    	        	button5.setMinSize(2*r, 2*r);
    	        	button5.setMaxSize(2*r, 2*r);
                 button5.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button5.setMinWidth(120);
                 button5.setMinHeight(120);
                 //EventHandler for Buttons
@@ -212,12 +267,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button6 = new Button();
-                button6.setText("4");
+                button6.setText("" + client.getSpielbrett().getMulden()[6].getAnzahlSteine());
                 button6.setShape(new Circle(r));
    	        	button6.setMinSize(2*r, 2*r);
    	        	button6.setMaxSize(2*r, 2*r);
                 button6.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonBlue.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button6.setMinWidth(120);
                 button6.setMinHeight(120);
                 //EventHandler for Buttons
@@ -230,12 +285,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button7 = new Button();
-                button7.setText("4");
+                button7.setText("" + client.getSpielbrett().getMulden()[7].getAnzahlSteine());
                 button7.setShape(new Circle(r));
    	        	button7.setMinSize(2*r, 2*r);
    	        	button7.setMaxSize(2*r, 2*r);
                 button7.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button7.setMinWidth(120);
                 button7.setMinHeight(120);
                 //EventHandler for Buttons
@@ -248,12 +303,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button8 = new Button();
-                button8.setText("4");
+                button8.setText("" + client.getSpielbrett().getMulden()[8].getAnzahlSteine());
                 button8.setShape(new Circle(r));
    	        	button8.setMinSize(2*r, 2*r);
    	        	button8.setMaxSize(2*r, 2*r);
                 button8.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button8.setMinWidth(120);
                 button8.setMinHeight(120);
                 //EventHandler for Buttons
@@ -266,12 +321,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button9 = new Button();
-                button9.setText("4");
+                button9.setText("" + client.getSpielbrett().getMulden()[9].getAnzahlSteine());
                 button9.setShape(new Circle(r));
    	        	button9.setMinSize(2*r, 2*r);
    	        	button9.setMaxSize(2*r, 2*r);
                 button9.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button9.setMinWidth(120);
                 button9.setMinHeight(120);
                 //EventHandler for Buttons
@@ -284,12 +339,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button10 = new Button();
-                button10.setText("4");
+                button10.setText("" + client.getSpielbrett().getMulden()[10].getAnzahlSteine());
                 button10.setShape(new Circle(r));
    	        	button10.setMinSize(2*r, 2*r);
    	        	button10.setMaxSize(2*r, 2*r);
                 button10.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button10.setMinWidth(120);
                 button10.setMinHeight(120);
                 //EventHandler for Buttons
@@ -302,12 +357,12 @@ public class SpielOberflaeche extends Application {
                 });
                 
                 Button button11 = new Button();
-                button11.setText("4");
+                button11.setText("" + client.getSpielbrett().getMulden()[11].getAnzahlSteine());
                 button11.setShape(new Circle(r));
    	        	button11.setMinSize(2*r, 2*r);
    	        	button11.setMaxSize(2*r, 2*r);
                 button11.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button11.setMinWidth(120);
                 button11.setMinHeight(120);
                 //EventHandler for Buttons
@@ -319,29 +374,11 @@ public class SpielOberflaeche extends Application {
                     }
                 });
                 
-                Button button12 = new Button();
-                button12.setText("4");
-                button12.setShape(new Circle(r));
-   	        	button12.setMinSize(2*r, 2*r);
-   	        	button12.setMaxSize(2*r, 2*r);
-                button12.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
-                button12.setMinWidth(120);
-                button12.setMinHeight(120);
-                //EventHandler for Buttons
-                button12.setOnAction(new EventHandler<ActionEvent>() {
-         
-                    @Override
-                    public void handle(ActionEvent event) {
-                        button12.setText("0");
-                    }
-                });
-                
                 Button buttonB = new Button();
-                buttonB.setText("0");
+                buttonB.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
                 buttonB.setShape(new Circle(radiusSammelMulden));
                 buttonB.getStylesheets().add
-                 (StartGUI.class.getResource("ButtonGreen.css").toExternalForm());
+                 (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 buttonB.setMinWidth(120);
                 buttonB.setMinHeight(260);
                 //EventHandler for Buttons
@@ -368,19 +405,19 @@ public class SpielOberflaeche extends Application {
                 gridSpielfeld.add(istAmZug, 4, 1, 4, 1);
                 
                 gridSpielfeld.add(buttonA, 1, 2, 1, 2);
-                gridSpielfeld.add(button1, 2, 2);
-                gridSpielfeld.add(button2, 3, 2);
-                gridSpielfeld.add(button3, 4, 2);
-                gridSpielfeld.add(button4, 5, 2);
-                gridSpielfeld.add(button5, 6, 2);
-                gridSpielfeld.add(button6, 7, 2);
+                gridSpielfeld.add(button0, 2, 2);
+                gridSpielfeld.add(button1, 3, 2);
+                gridSpielfeld.add(button2, 4, 2);
+                gridSpielfeld.add(button3, 5, 2);
+                gridSpielfeld.add(button4, 6, 2);
+                gridSpielfeld.add(button5, 7, 2);
                 
-                gridSpielfeld.add(button7, 2, 3);
-                gridSpielfeld.add(button8, 3, 3);
-                gridSpielfeld.add(button9, 4, 3);
-                gridSpielfeld.add(button10, 5, 3);
-                gridSpielfeld.add(button11, 6, 3);
-                gridSpielfeld.add(button12, 7, 3);
+                gridSpielfeld.add(button6, 2, 3);
+                gridSpielfeld.add(button7, 3, 3);
+                gridSpielfeld.add(button8, 4, 3);
+                gridSpielfeld.add(button9, 5, 3);
+                gridSpielfeld.add(button10, 6, 3);
+                gridSpielfeld.add(button11, 7, 3);
                 gridSpielfeld.add(buttonB, 8, 2 , 1, 2);
                 
                 gridSpielfeld.add(fehlerAusgabe, 3, 4, 4, 1);
@@ -391,26 +428,14 @@ public class SpielOberflaeche extends Application {
                 
                 spielfeld = new Scene(gridSpielfeld, 1200, 700);
                 spielfeld.getStylesheets().add
-                (StartGUI.class.getResource("Background.css").toExternalForm());
+                (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 //------------>	Ende Spielfeld Scene  
                 
                 
                 hauptfenster.setScene(anmeldung);
                 hauptfenster.show();
 		        
-		        anmeldungBtn.setOnAction(new EventHandler<ActionEvent>() {
 		        
-		        	@Override
-			        public void handle(ActionEvent e) {
-		        		hauptfenster.setScene(spielfeld);
-		        		hauptfenster.centerOnScreen();
-		        		/*
-		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
-		        		 * gemeldet wird dass der 2. Spieler da ist
-		        		 */
-
-		        	}
-		        });
 
 		    }
 
