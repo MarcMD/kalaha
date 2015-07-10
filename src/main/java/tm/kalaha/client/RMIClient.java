@@ -46,6 +46,34 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		}
 	}
 	
+	public void muldeSpielen(int muldenNummer) {
+		try {
+			server.muldeSpielen(this.getSpielerName(), muldenNummer);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (KalahaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void abmelden() {
+		try {
+			server.abmelden(this);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (KalahaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void neuesSpielStarten() {
+		try {
+			server.neuesSpielStarten(spielerName);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void run() {
 		//Verbindung aufbauen 
 		try {

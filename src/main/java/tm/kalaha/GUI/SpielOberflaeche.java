@@ -100,6 +100,8 @@ public class SpielOberflaeche extends Application {
 		        	
 		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
+						client.setSpielerName(spielerNameText.getText());
+						client.anmelden();
 		        		
 		        		/*
 		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
