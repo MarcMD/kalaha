@@ -56,7 +56,6 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	//TODO Testen
 	@Override
 	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, KalahaException {
-		
 		System.out.println("Client meldet sich an");
 		if(angemeldet(client)) {
 			//TODO Fehlermeldung
@@ -129,6 +128,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	}
 			
 	public synchronized void sendeSpielbrett() {
+		
 			try {
 				System.out.println("Spielbrett an ClientA schicken");
 				clientA.spielbrettBekommen(meinSpiel.getSpielbrett());
