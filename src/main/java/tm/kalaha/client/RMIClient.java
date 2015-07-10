@@ -21,6 +21,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	
 	private String spielerName;
 	private Spielbrett spielbrett = new Spielbrett();
+	ServerInterface server = null; 
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
@@ -31,8 +32,21 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		return spielerName;
 	}
 	
+	public void setSpielerName(String spielerName) {
+		this.spielerName = spielerName;
+	}
+	
+	public void anmelden() {
+		try {
+			server.anmelden(this);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (KalahaException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void run() {
-		ServerInterface server = null; 
 		//Verbindung aufbauen 
 		try {
 			String bindURL = "rmi://"+HOST+"/" +BIND_NAME;

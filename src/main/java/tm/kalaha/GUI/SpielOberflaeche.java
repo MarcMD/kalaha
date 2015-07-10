@@ -39,6 +39,7 @@ public class SpielOberflaeche extends Application {
 		 public static void main(String[] args) {
 			 try {
 				 client = new RMIClient("DummyName");
+
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
