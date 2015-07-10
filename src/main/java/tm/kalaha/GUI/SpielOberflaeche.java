@@ -33,6 +33,9 @@ public class SpielOberflaeche extends Application {
 	Scene aufSpielerWarten = null;
 	Scene spielfeld = null;
 	static RMIClient client;
+	Label spielernameA = null;
+	Label spielernameB = null;
+	Label fehlerAusgabe = null;
 									
 			
 	
@@ -90,6 +93,10 @@ public class SpielOberflaeche extends Application {
 			        
 		        	@Override
 			        public void handle(ActionEvent e) {
+		        		 
+		        		client.anmelden();
+		        		client.setSpielerName(spielerNameText.getText());
+		        		anmeldeUpdate(spielernameA, spielernameB);
 		        	
 		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
@@ -107,11 +114,11 @@ public class SpielOberflaeche extends Application {
 
    	        	
 //------------> Start Spielfeld Scene
-   	        	Label spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
+   	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
                 
-                Label spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
+                spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
                 spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 30));
                 
@@ -127,7 +134,7 @@ public class SpielOberflaeche extends Application {
                 istAmZug.setFont(Font.font("Arial", FontPosture.ITALIC, 22));
                 
                 //Mit Backend verknüpfen
-                Label fehlerAusgabe = new Label("Ausgabe der Fehlermeldung oder Warten auf Spieler 2...");
+                fehlerAusgabe = new Label("Warten auf Spieler 2...");
                 fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
                 fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 18));
                 
@@ -435,9 +442,12 @@ public class SpielOberflaeche extends Application {
                 
                 hauptfenster.setScene(anmeldung);
                 hauptfenster.show();
-		        
-		        
 
 		    }
+		    
+		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
+                spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
+                spielernameB.setText(client.getSpielbrett().getSpielerA().getSpielerName());
+			}
 
 }
