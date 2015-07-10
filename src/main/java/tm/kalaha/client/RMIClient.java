@@ -52,20 +52,20 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 			System.out.println(e.getStackTrace());
 		}
 		
-		try {
-			server.anmelden(this);
-			server.muldeSpielen("marc", 2);
-			System.out.println("Neues Spiel");
-			server.neuesSpielStarten("marc");
+//		try {
+//			server.anmelden(this);
+//			server.muldeSpielen("marc", 2);
+//			System.out.println("Neues Spiel");
+//			server.neuesSpielStarten("marc");
 //			while(true) {
 //				
 //			}
-			server.abmelden(this);
-		} catch (KalahaException e) {
-			System.out.println(e.getMessage());
-		} catch (RemoteException e) {
-			System.out.println(e.getMessage());
-		}
+//			server.abmelden(this);
+//		} catch (KalahaException e) {
+//			System.out.println(e.getMessage());
+//		} catch (RemoteException e) {
+//			System.out.println(e.getMessage());
+//		}
 	}
 	
 	public Spielbrett getSpielbrett(){
