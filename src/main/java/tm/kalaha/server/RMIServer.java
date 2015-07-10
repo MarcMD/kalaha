@@ -115,17 +115,6 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 //		}
 //		printStatus();		
 	}
-
-
-	private void printStatus() throws RemoteException {
-//		Calendar cal = GregorianCalendar.getInstance();
-//		String msg = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND) + "Uhr: ";
-//		msg += clients.size() + "User aktuell online:";
-//		for(RMIClientInterface c: clients) {
-//			msg += c.getSpielerName() + " ";
-//		}
-//		System.out.println(msg);
-	}
 			
 	public synchronized void sendeSpielbrett() {
 		
