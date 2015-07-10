@@ -93,15 +93,13 @@ public class SpielOberflaeche extends Application {
 			        
 		        	@Override
 			        public void handle(ActionEvent e) {
-		        		 
-		        		client.anmelden();
-		        		client.setSpielerName(spielerNameText.getText());
-		        		anmeldeUpdate(spielernameA, spielernameB);
-		        	
+		
 		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
 						client.setSpielerName(spielerNameText.getText());
 						client.anmelden();
+						
+						anmeldeUpdate(spielernameA, spielernameB);
 		        		
 		        		/*
 		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
@@ -449,7 +447,7 @@ public class SpielOberflaeche extends Application {
 		    
 		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
                 spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
-                spielernameB.setText(client.getSpielbrett().getSpielerA().getSpielerName());
+                spielernameB.setText(client.getSpielbrett().getSpielerB().getSpielerName());
 			}
 
 }
