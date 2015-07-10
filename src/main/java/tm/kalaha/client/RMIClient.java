@@ -20,18 +20,61 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private static final String BIND_NAME = "RMI-Server";
 	
 	private String spielerName;
-	private Spielbrett spielbrett = null;
+	private Spielbrett spielbrett = new Spielbrett();
+	ServerInterface server = null; 
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
+		run();
 	}
 	
 	public String getSpielerName() {
 		return spielerName;
 	}
 	
+	public void setSpielerName(String spielerName) {
+		this.spielerName = spielerName;
+	}
+	
+	public void anmelden() {
+		try {
+			server.anmelden(this);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (KalahaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void muldeSpielen(int muldenNummer) {
+		try {
+			server.muldeSpielen(this.getSpielerName(), muldenNummer);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (KalahaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void abmelden() {
+		try {
+			server.abmelden(this);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (KalahaException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void neuesSpielStarten() {
+		try {
+			server.neuesSpielStarten(spielerName);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void run() {
-		ServerInterface server = null; 
 		//Verbindung aufbauen 
 		try {
 			String bindURL = "rmi://"+HOST+"/" +BIND_NAME;
@@ -51,20 +94,24 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 			System.out.println(e.getStackTrace());
 		}
 		
-		try {
-			server.anmelden(this);
-			server.muldeSpielen("marc", 2);
-			System.out.println("Neues Spiel");
-			server.neuesSpielStarten("marc");
+//		try {
+//			server.anmelden(this);
+//			server.muldeSpielen("marc", 2);
+//			System.out.println("Neues Spiel");
+//			server.neuesSpielStarten("marc");
 //			while(true) {
 //				
 //			}
-			server.abmelden(this);
-		} catch (KalahaException e) {
-			System.out.println(e.getMessage());
-		} catch (RemoteException e) {
-			System.out.println(e.getMessage());
-		}
+//			server.abmelden(this);
+//		} catch (KalahaException e) {
+//			System.out.println(e.getMessage());
+//		} catch (RemoteException e) {
+//			System.out.println(e.getMessage());
+//		}
+	}
+	
+	public Spielbrett getSpielbrett(){
+		return spielbrett;
 	}
 
 	@Override
