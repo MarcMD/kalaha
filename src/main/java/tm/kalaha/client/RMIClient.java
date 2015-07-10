@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import tm.kalaha.GUI.SpielbrettAction;
 import tm.kalaha.server.Mulde;
 import tm.kalaha.server.Spielbrett;
 import tm.kalaha.serverInterface.KalahaException;
@@ -22,6 +23,8 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private String spielerName;
 	private Spielbrett spielbrett = new Spielbrett();
 	ServerInterface server = null; 
+	
+	private SpielbrettAction meineGUI; 
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
@@ -118,6 +121,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	public synchronized void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
 		brettAusgeben();
+		meineGUI.spielbrettVeraendert();
 	}
 	
 	private void brettAusgeben() {
@@ -131,5 +135,20 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 			}
 		}
 		System.out.println("");
+	}
+
+	public SpielbrettAction getMeineGUI() {
+		return meineGUI;
+	}
+
+	/**
+	 * Hier bekommt der Client eine Referenz auf das GUI Objekt. 
+	 * Diese Referenz wird benutzt, um der GUI mitzuteilen wenn das 
+	 * Spielbrett verändert wurde
+	 * @param meineGUI
+	 */
+	public void setMeineGUI(SpielbrettAction meineGUI) {
+		System.out.println("meineGUI wurde als SpielbrettAction gesetzt");
+		this.meineGUI = meineGUI;
 	}
 }
