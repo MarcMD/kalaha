@@ -2,6 +2,9 @@ package tm.kalaha.GUI;
 
 import java.rmi.RemoteException;
 
+import javafx.application.Platform;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
 import tm.kalaha.client.RMIClient;
 import tm.kalaha.server.Spielbrett;
 import javafx.application.Application;
@@ -27,18 +30,22 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.shape.Circle;
 
 @SuppressWarnings({ "restriction" })
-public class SpielOberflaeche extends Application {
+public class SpielOberflaeche extends Application implements SpielbrettAction {
 
 	Scene anmeldung = null;
 	Scene aufSpielerWarten = null;
 	Scene spielfeld = null;
 	static RMIClient client;
+	Label spielernameA = null;
+	Label spielernameB = null;
+	Label fehlerAusgabe = null;
 									
 			
 	
 		 public static void main(String[] args) {
 			 try {
 				 client = new RMIClient("DummyName");
+				 
 
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
@@ -53,6 +60,9 @@ public class SpielOberflaeche extends Application {
 		    	hauptfenster.setTitle("Kalaha");
 		    	hauptfenster.centerOnScreen();
 		    	
+		    	//Client bekommt dieses Objekt übergeben und kann dann
+		    	//die Methode spielbrettVeraendert() aufrufen
+		    	client.setMeineGUI(this);
 		    	
 //------------> Anmeldungs Scene
 		    	GridPane gridAnmeldung = new GridPane();
@@ -73,28 +83,62 @@ public class SpielOberflaeche extends Application {
 		        TextField spielerNameText = new TextField();
 		        gridAnmeldung.add(spielerNameText, 1, 1);
 		        
+		        Label ipAdresse = new Label("IP - Adresse:");
+		        ipAdresse.setTextFill(Color.ANTIQUEWHITE);
+		        gridAnmeldung.add(ipAdresse, 0, 2);
+		        
+		        TextField ipAdresseText = new TextField();
+		        gridAnmeldung.add(ipAdresseText, 1, 2);
+		        
+		        DropShadow ds = new DropShadow();
+		        ds.setOffsetY(3.0f);
+		        ds.setOffsetX(5.0f);
+		        ds.setColor(Color.BROWN);
+		        
+		        InnerShadow is = new InnerShadow();
+		        is.setOffsetY(0.3f);
+		        is.setColor(Color.BLACK);
+		        
 		        Button anmeldungBtn = new Button("Anmelden");
-		        anmeldungBtn.setTextFill(Color.BROWN);
-		        anmeldungBtn.setStyle(" -fx-base: #FFFFFA;");
+		        anmeldungBtn.setTextFill(Color.ANTIQUEWHITE);
+		        anmeldungBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		        anmeldungBtn.setStyle(" -fx-base: #9F7347;");
+		        anmeldungBtn.setEffect(is);
+		        //anmeldungBtn.setStyle("-fx-stroke: black;");
+		        //anmeldungBtn.setEffect(ds);
+		        
+		        Button beendenBtn = new Button("Beenden");
+		        beendenBtn.setTextFill(Color.ANTIQUEWHITE);
+		        beendenBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		        beendenBtn.setStyle(" -fx-base: #9F7347;");
+		        beendenBtn.setEffect(is);
 		        
 		        HBox hboxBtn = new HBox(10);
 		        hboxBtn.setAlignment(Pos.BOTTOM_RIGHT);
 		        hboxBtn.getChildren().add(anmeldungBtn);
-		        gridAnmeldung.add(hboxBtn, 1, 4);
+		        hboxBtn.getChildren().add(beendenBtn);
+		        gridAnmeldung.add(hboxBtn, 1, 3);
 		        
 		        anmeldung = new Scene(gridAnmeldung, 500, 300);
 		        anmeldung.getStylesheets().add
                 (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 		        
+		        beendenBtn.setOnAction(e -> {
+//			     	   Platform.exit();
+		        	hauptfenster.close();
+		     	});
+		        
 		        anmeldungBtn.setOnAction(new EventHandler<ActionEvent>() {
 			        
 		        	@Override
 			        public void handle(ActionEvent e) {
-		        	
+		
 		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
-						client.setSpielerName(spielerNameText.getText());
-						client.anmelden();
+//						client.setSpielerName(spielerNameText.getText());
+//						client.anmelden();
+//						
+//						anmeldeUpdate(spielernameA, spielernameB);
 		        		
 		        		/*
 		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
@@ -109,14 +153,14 @@ public class SpielOberflaeche extends Application {
 
    	        	
 //------------> Start Spielfeld Scene
-   	        	Label spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
+   	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
                 
-                Label spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
+                spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
                 spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 30));
-                
+
                 String werIstDran = null;
                 if(client.getSpielbrett().getSpielerA().isIstAmZug()){
                 	werIstDran = client.getSpielbrett().getSpielerA().getSpielerName();
@@ -129,7 +173,7 @@ public class SpielOberflaeche extends Application {
                 istAmZug.setFont(Font.font("Arial", FontPosture.ITALIC, 22));
                 
                 //Mit Backend verknüpfen
-                Label fehlerAusgabe = new Label("Ausgabe der Fehlermeldung oder Warten auf Spieler 2...");
+                fehlerAusgabe = new Label("Warten auf Spieler 2...");
                 fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
                 fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 18));
                 
@@ -149,6 +193,12 @@ public class SpielOberflaeche extends Application {
                 inputTxt = new TextField();
                 inputTxt.setFocusTraversable(true);
                 //Mit Backend verknüpfen
+                
+                DropShadow dropShadowRund = new DropShadow();
+                dropShadowRund.setRadius(10.0);
+                dropShadowRund.setOffsetX(3.0);
+                dropShadowRund.setOffsetY(3.0);
+                dropShadowRund.setColor(Color.color(0.4, 0.5, 0.5));
                
    	        	
                 Button buttonA = new Button();
@@ -159,7 +209,8 @@ public class SpielOberflaeche extends Application {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 buttonA.setMinWidth(120);
                 buttonA.setMinHeight(260);
-                
+                buttonA.setEffect(dropShadowRund);
+                                
                 Button button0 = new Button();
                 button0.setText("" + client.getSpielbrett().getMulden()[0].getAnzahlSteine());
                 double r = 30;
@@ -437,9 +488,18 @@ public class SpielOberflaeche extends Application {
                 
                 hauptfenster.setScene(anmeldung);
                 hauptfenster.show();
-		        
-		        
 
 		    }
+		    
+		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
+                spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
+                spielernameB.setText(client.getSpielbrett().getSpielerB().getSpielerName());
+			}
+
+			@Override
+			public void spielbrettVeraendert() {
+				System.out.println("spielbrettVeraendert wurde aufgerufen");
+				this.anmeldeUpdate(spielernameA, spielernameB);
+			}
 
 }
