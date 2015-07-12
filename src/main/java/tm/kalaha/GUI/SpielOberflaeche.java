@@ -30,7 +30,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.shape.Circle;
 
 @SuppressWarnings({ "restriction" })
-public class SpielOberflaeche extends Application {
+public class SpielOberflaeche extends Application implements SpielbrettAction {
 
 	Scene anmeldung = null;
 	Scene aufSpielerWarten = null;
@@ -45,6 +45,7 @@ public class SpielOberflaeche extends Application {
 		 public static void main(String[] args) {
 			 try {
 				 client = new RMIClient("DummyName");
+				 
 
 			} catch (RemoteException e) {
 				// TODO Auto-generated catch block
@@ -59,6 +60,9 @@ public class SpielOberflaeche extends Application {
 		    	hauptfenster.setTitle("Kalaha");
 		    	hauptfenster.centerOnScreen();
 		    	
+		    	//Client bekommt dieses Objekt übergeben und kann dann
+		    	//die Methode spielbrettVeraendert() aufrufen
+		    	client.setMeineGUI(this);
 		    	
 //------------> Anmeldungs Scene
 		    	GridPane gridAnmeldung = new GridPane();
@@ -490,6 +494,12 @@ public class SpielOberflaeche extends Application {
 		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
                 spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameB.setText(client.getSpielbrett().getSpielerB().getSpielerName());
+			}
+
+			@Override
+			public void spielbrettVeraendert() {
+				System.out.println("spielbrettVeraendert wurde aufgerufen");
+				this.anmeldeUpdate(spielernameA, spielernameB);
 			}
 
 }
