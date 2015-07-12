@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Scanner;
 
+import tm.kalaha.GUI.SpielbrettAction;
 import tm.kalaha.server.Mulde;
 import tm.kalaha.server.Spielbrett;
 import tm.kalaha.serverInterface.KalahaException;
@@ -22,6 +23,8 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private String spielerName;
 	private Spielbrett spielbrett = new Spielbrett();
 	ServerInterface server = null; 
+	
+	private SpielbrettAction meinUI; 
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
@@ -118,18 +121,40 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	public synchronized void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
 		brettAusgeben();
+		meinUI.spielbrettVeraendert();
 	}
 	
 	private void brettAusgeben() {
-		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
-		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
-		Mulde[] mulden = spielbrett.getMulden();
-		for(int i =0; i<12; i++) {
-			System.out.print(mulden[i].getAnzahlSteine()+ " ");
-			if(i == 5) {
-				System.out.println("");
-			}
-		}
-		System.out.println("");
+//		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
+//		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
+//		Mulde[] mulden = spielbrett.getMulden();
+//		for(int i =0; i<12; i++) {
+//			System.out.print(mulden[i].getAnzahlSteine()+ " ");
+//			if(i == 5) {
+//				System.out.println("");
+//			}
+//		}
+//		System.out.println("");
 	}
+
+	public SpielbrettAction getMeinUI() {
+		return meinUI;
+	}
+
+	/**
+	 * Hier bekommt der Client eine Referenz auf das GUI Objekt. 
+	 * Diese Referenz wird benutzt, um der GUI mitzuteilen wenn das 
+	 * Spielbrett verändert wurde
+	 * @param meinUI
+	 */
+	public void setMeinUI(SpielbrettAction meinUI) {
+		System.out.println("meineGUI wurde als SpielbrettAction gesetzt");
+		this.meinUI = meinUI;
+	}
+
+	@Override
+	public void neuesSpiel() throws RemoteException {
+		server.neuesSpielStarten(spielerName);
+	}
+
 }
