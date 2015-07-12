@@ -24,7 +24,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	private Spielbrett spielbrett = new Spielbrett();
 	ServerInterface server = null; 
 	
-	private SpielbrettAction meineGUI; 
+	private SpielbrettAction meinUI; 
 	
 	public RMIClient (String n) throws RemoteException {
 		spielerName = n;
@@ -121,34 +121,40 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	public synchronized void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
 		brettAusgeben();
-		meineGUI.spielbrettVeraendert();
+		meinUI.spielbrettVeraendert();
 	}
 	
 	private void brettAusgeben() {
-		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
-		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
-		Mulde[] mulden = spielbrett.getMulden();
-		for(int i =0; i<12; i++) {
-			System.out.print(mulden[i].getAnzahlSteine()+ " ");
-			if(i == 5) {
-				System.out.println("");
-			}
-		}
-		System.out.println("");
+//		System.out.println("SpielerA: "+ spielbrett.getSpielerA().getSpielerName());
+//		System.out.println("SpielerB: "+ spielbrett.getSpielerB().getSpielerName());
+//		Mulde[] mulden = spielbrett.getMulden();
+//		for(int i =0; i<12; i++) {
+//			System.out.print(mulden[i].getAnzahlSteine()+ " ");
+//			if(i == 5) {
+//				System.out.println("");
+//			}
+//		}
+//		System.out.println("");
 	}
 
-	public SpielbrettAction getMeineGUI() {
-		return meineGUI;
+	public SpielbrettAction getMeinUI() {
+		return meinUI;
 	}
 
 	/**
 	 * Hier bekommt der Client eine Referenz auf das GUI Objekt. 
 	 * Diese Referenz wird benutzt, um der GUI mitzuteilen wenn das 
 	 * Spielbrett verändert wurde
-	 * @param meineGUI
+	 * @param meinUI
 	 */
-	public void setMeineGUI(SpielbrettAction meineGUI) {
+	public void setMeinUI(SpielbrettAction meinUI) {
 		System.out.println("meineGUI wurde als SpielbrettAction gesetzt");
-		this.meineGUI = meineGUI;
+		this.meinUI = meinUI;
 	}
+
+	@Override
+	public void neuesSpiel() throws RemoteException {
+		server.neuesSpielStarten(spielerName);
+	}
+
 }
