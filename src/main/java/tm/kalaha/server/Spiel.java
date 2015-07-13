@@ -35,7 +35,57 @@ public class Spiel {
 	 *            Zeiger auf die Mulde, die gespielt werden soll
 	 */
 	public Spielbrett muldeSpieln(String spielerName, int muldenNummer) {
-		spielbrett.getMulden()[muldenNummer].setAnzahlSteine(0);
+		//Den Spieler bestimmen, der momentan am Zug ist 
+		Spieler aktuellerSpieler = null; 
+		if(spielbrett.getSpielerA().isIstAmZug()) {
+			aktuellerSpieler = spielbrett.getSpielerA();
+		} else if(spielbrett.getSpielerB().isIstAmZug()) {
+			aktuellerSpieler = spielbrett.getSpielerB();
+		}
+		
+		//Fehlermeldung wird bei jedem neuen Zug wieder zurückgesetzt
+		spielbrett.getSpielerA().setFehlerMeldung(null);
+		spielbrett.getSpielerB().setFehlerMeldung(null);
+		
+		//Prüfen, ob der Spieler am Zug ist
+		if(aktuellerSpieler.getSpielerName().equals(spielerName)) {
+//TODO Prüfen, ob Spieler dieses Feld spielen darf. Wenn nicht --> Fehlermeldung ausgeben
+			//Steine verteilen
+			int steine = spielbrett.getMulden()[muldenNummer].steineNemhen();
+			int zeiger = muldenNummer;
+			
+			//Solange noch Steine da sind, gehe zum naechsten Feld 
+			//und verteile jeweils einen Stein
+			while (steine >0) {
+				zeiger++;
+				if(zeiger>11) {
+					zeiger =0;
+				}
+				spielbrett.getMulden()[zeiger].steinHinzufügen();
+				steine--;
+			}
+			
+//TODO Prüfen, ob ein Spieler Steine gewonnen hat
+			
+			//nächster Spieler ist dran
+			if(aktuellerSpieler.equals(spielbrett.getSpielerA())) {
+				spielbrett.getSpielerA().setIstAmZug(false);
+				spielbrett.getSpielerB().setIstAmZug(true);
+			} else if(aktuellerSpieler.equals(spielbrett.getSpielerB())) {
+				spielbrett.getSpielerB().setIstAmZug(false);
+				spielbrett.getSpielerA().setIstAmZug(true);
+			}
+			
+		} else {
+			//Wenn der Zug von einem Spieler ausgeführt wurde, obwohl dieser Spieler nicht 
+			//am Zug ist, bekommt dieser Spieler eine Fehlermeldung
+			if(spielbrett.getSpielerA().getSpielerName().equals(spielerName)) {
+				spielbrett.getSpielerA().setFehlerMeldung("Du bist nicht am Zug");
+			} else if(spielbrett.getSpielerB().getSpielerName().equals(spielerName)) {
+				spielbrett.getSpielerB().setFehlerMeldung("Du bist nicht am Zug");
+			}
+		}
+		
 		return spielbrett;
 	}
 
