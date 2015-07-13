@@ -59,7 +59,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		    	
 		    	//Client bekommt dieses Objekt übergeben und kann dann
 		    	//die Methode spielbrettVeraendert() aufrufen
-		    	client.setMeineGUI(this);
+		    	client.setMeinUI(this);
 		    	
 //------------> Anmeldungs Scene
 		    	GridPane gridAnmeldung = new GridPane();

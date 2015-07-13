@@ -148,7 +148,6 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	 * @param meinUI
 	 */
 	public void setMeinUI(SpielbrettAction meinUI) {
-		System.out.println("meineGUI wurde als SpielbrettAction gesetzt");
 		this.meinUI = meinUI;
 	}
 
