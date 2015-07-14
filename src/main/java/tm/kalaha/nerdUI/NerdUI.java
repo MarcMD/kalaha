@@ -107,16 +107,22 @@ public class NerdUI implements SpielbrettAction {
 					+ client.getSpielbrett().getSpielerB().getGewonneneSteine() + ")");
 
 			// Ausgabe des Spielbretts
-			for (int i = 0; i < 12; i++) {
+			for (int i = 0; i < 6; i++) {
 				int steine = getClient().getSpielbrett().getMulden()[i].getAnzahlSteine();
 				if (steine <= 10) {
 					System.out.print(getClient().getSpielbrett().getMulden()[i].getAnzahlSteine() + " ");
 				} else {
 					System.out.print(getClient().getSpielbrett().getMulden()[i].getAnzahlSteine() + "  ");
 				}
-				if (i == 5) {
-					// Line break
-					System.out.println("");
+			}
+			// Line break
+			System.out.println("");
+			for(int i=11; i>5;i--) {
+				int steine = getClient().getSpielbrett().getMulden()[i].getAnzahlSteine();
+				if (steine <= 10) {
+					System.out.print(getClient().getSpielbrett().getMulden()[i].getAnzahlSteine() + " ");
+				} else {
+					System.out.print(getClient().getSpielbrett().getMulden()[i].getAnzahlSteine() + "  ");
 				}
 			}
 		} catch (RemoteException e) {

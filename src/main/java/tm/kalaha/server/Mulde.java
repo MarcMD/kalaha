@@ -18,6 +18,22 @@ public class Mulde implements Serializable {
 		this.anzahlSteine = anzahlSteine;
 	}
 	
+	/**
+	 * Gibt die Anzahl der Steine zurück und leert die Mulde
+	 */
+	public int steineNemhen() {
+		int i = anzahlSteine;
+		anzahlSteine = 0;
+		return i;
+	}
+	
+	/*
+	 * Fügt genau einen Stein hinzu
+	 */
+	public void steinHinzufügen() {
+		anzahlSteine++;
+	}
+	
 	
 
 }

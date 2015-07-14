@@ -14,6 +14,8 @@ public class Spielbrett implements Serializable {
 		for(int i=0; i<12; i++) {
 			mulden[i] = new Mulde();
 		}
+		spielerA.setIstAmZug(true);
+		spielerB.setIstAmZug(false);
 	}
 
 	public Mulde[] getMulden() {
