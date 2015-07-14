@@ -53,5 +53,13 @@ public class Spieler implements Serializable {
 	public void setHatGewonnen(boolean hatGewonnen) {
 		this.hatGewonnen = hatGewonnen;
 	}
+	
+	/**
+	 * Fügt dem Spieler die anzahl der in dem Zug gewonnen Steine hinzu
+	 * @param steine gewonnene Steine
+	 */
+	public void steineGewinnen(int steine) {
+		this.gewonneneSteine = this.gewonneneSteine + steine;
+	}
 
 }
