@@ -77,9 +77,15 @@ public class Spiel {
 						&& !spielerDarfFeldSpielen(aktuellerSpieler, zeiger)) {
 					aktuellerSpieler.steineGewinnen(spielbrett.getMulden()[zeiger].steineNemhen());
 					zeiger--;
+					if(zeiger<0) {
+						zeiger = 11;
+					}
 				}
 				
 //TODO Prüfen, ob das Spiel vorbei ist
+				if(istSpielZuEnde(aktuellerSpieler)) {
+					bestimmeGewinner();
+				}
 				
 				//nächster Spieler ist dran
 				if(aktuellerSpieler.equals(spielbrett.getSpielerA())) {
@@ -134,10 +140,11 @@ public class Spiel {
 	 * Wird lokal nach jedem Zug aufgerufen, um zu prüfen, ob das Spiel zu Ende
 	 * ist.
 	 * 
-	 * @return true wenn das Spiel zu Ende ist, false wenn das Spiel nicht zu
-	 *         Ende ist
+	 * @param aktuellerSpieler
+	 * @return true wenn das Spiel zu Ende ist
 	 */
-	public boolean istSpielZuEnde() {
+	public boolean istSpielZuEnde(Spieler aktuellerSpieler) {
+		
 		return false;
 	}
 
@@ -153,6 +160,8 @@ public class Spiel {
 	 * Startet ein neues Spiel, indem das alte Spielbrett auf null gesetzt wird.
 	 * SpielerName wird benutzt, um im nächsten Spiel eine Meldung auszugeben,
 	 * welcher Spieler das neue Spiel gestartet hat.
+	 * @param spielerName
+	 * @return das neue Spielbrett
 	 */
 	public Spielbrett neuesSpielStarten(String spielerName) {
 		// TODO Meldung setzen

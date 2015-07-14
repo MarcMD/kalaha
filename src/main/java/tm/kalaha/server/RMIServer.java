@@ -53,7 +53,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		}
 	}
 
-	//TODO Testen
+//TODO Testen
 	@Override
 	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, KalahaException {
 		System.out.println("Client meldet sich an");
