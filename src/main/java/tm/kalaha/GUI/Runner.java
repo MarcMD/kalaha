@@ -1,5 +1,6 @@
 package tm.kalaha.GUI;
 
+import tm.kalaha.client.RMIClient;
 import tm.kalaha.server.Spielbrett;
 import javafx.application.Platform;
 @SuppressWarnings("restriction")
@@ -8,10 +9,12 @@ public class Runner extends Thread {
 	
 	private Spielbrett spielbrett;
 	private SpielOberflaeche gui;
+	private RMIClient client;
 	
-	public Runner( final Spielbrett spielbrett, final SpielOberflaeche gui) {
+	public Runner( final Spielbrett spielbrett, final SpielOberflaeche gui, final RMIClient client) {
 		this.spielbrett = spielbrett;
 		this.gui = gui;
+		this.client = client;
 		start();
 	}
 	
@@ -35,8 +38,20 @@ public class Runner extends Thread {
 			Platform.runLater(() -> this.gui.button11.setText("" + spielbrett.getMulden()[11].getAnzahlSteine()));
 			Platform.runLater(() -> this.gui.buttonB.setText("" + spielbrett.getSpielerB().getGewonneneSteine()));
 			
-
-
+			if(spielbrett.getSpielerA().isIstAmZug()){
+				Platform.runLater(() -> this.gui.istAmZug.setText(spielbrett.getSpielerA().getSpielerName()));
+			}else{
+				Platform.runLater(() -> this.gui.istAmZug.setText(spielbrett.getSpielerB().getSpielerName()));
+			}
+			
+			if(client.getSpielerName().equals(spielbrett.getSpielerA().getSpielerName())){
+				
+				Platform.runLater(() -> this.gui.fehlerAusgabe.setText(spielbrett.getSpielerA().getFehlerMeldung()));
+				
+			}else if(client.getSpielerName().equals(spielbrett.getSpielerB().getSpielerName())){
+				
+				Platform.runLater(() -> this.gui.fehlerAusgabe.setText(spielbrett.getSpielerB().getFehlerMeldung()));
+			}
 
 
 		} catch (Exception e) {

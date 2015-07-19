@@ -38,6 +38,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 	static RMIClient client;
 	Label spielernameA = null;
 	Label spielernameB = null;
+	Label istAmZug = null;
 	Label fehlerAusgabe = null;
 	Button buttonA = null;
 	Button button0 = null;
@@ -150,6 +151,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
 						client.setSpielerName(spielerNameText.getText());
+						client.setHost(ipAdresseText.getText());
 						client.anmelden();
 
 
@@ -169,19 +171,18 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 spielernameB.setTextFill(Color.web("#009900"));
                 spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 30));
 
-                String werIstDran = null;
-                if(client.getSpielbrett().getSpielerA().isIstAmZug()){
-                	werIstDran = client.getSpielbrett().getSpielerA().getSpielerName();
-                }else{
-                	werIstDran = client.getSpielbrett().getSpielerB().getSpielerName();
-                }
+//                String werIstDran = null;
+//                if(client.getSpielbrett().getSpielerA().isIstAmZug()){
+//                	werIstDran = client.getSpielbrett().getSpielerA().getSpielerName();
+//                }else{
+//                	werIstDran = client.getSpielbrett().getSpielerB().getSpielerName();
+//                }
                 
-                Label istAmZug = new Label("Spieler '" + werIstDran +"' ist am Zug");
+                istAmZug = new Label();
                 istAmZug.setTextFill(Color.ANTIQUEWHITE);
                 istAmZug.setFont(Font.font("Arial", FontPosture.ITALIC, 22));
                 
-                //Mit Backend verknüpfen
-                fehlerAusgabe = new Label("Warten auf Spieler 2...");
+                fehlerAusgabe = new Label();
                 fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
                 fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 18));
                 
@@ -234,7 +235,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button0.setText("0");
+                        client.muldeSpielen(0);
                     }
                 });
                 
@@ -252,7 +253,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button1.setText("0");
+                    	client.muldeSpielen(1);
                     }
                 });
                 
@@ -270,7 +271,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button2.setText("0");
+                    	client.muldeSpielen(2);
                     }
                 });
                 
@@ -288,7 +289,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button3.setText("0");
+                    	client.muldeSpielen(3);
                     }
                 });
                 
@@ -306,7 +307,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button4.setText("0");
+                    	client.muldeSpielen(4);
                     }
                 });
                 
@@ -324,7 +325,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button5.setText("0");
+                    	client.muldeSpielen(5);
                     }
                 });
                 
@@ -342,7 +343,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button6.setText("0");
+                    	client.muldeSpielen(6);
                     }
                 });
                 
@@ -360,7 +361,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button7.setText("0");
+                    	client.muldeSpielen(7);
                     }
                 });
                 
@@ -378,7 +379,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button8.setText("0");
+                    	client.muldeSpielen(8);
                     }
                 });
                 
@@ -396,7 +397,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button9.setText("0");
+                    	client.muldeSpielen(9);
                     }
                 });
                 
@@ -414,7 +415,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button10.setText("0");
+                    	client.muldeSpielen(10);
                     }
                 });
                 
@@ -432,7 +433,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
          
                     @Override
                     public void handle(ActionEvent event) {
-                        button11.setText("0");
+                    	client.muldeSpielen(11);
                     }
                 });
                 
@@ -467,12 +468,12 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 gridSpielfeld.add(istAmZug, 4, 1, 4, 1);
                 
                 gridSpielfeld.add(buttonA, 1, 2, 1, 2);
-                gridSpielfeld.add(button0, 2, 2);
-                gridSpielfeld.add(button1, 3, 2);
-                gridSpielfeld.add(button2, 4, 2);
-                gridSpielfeld.add(button3, 5, 2);
-                gridSpielfeld.add(button4, 6, 2);
-                gridSpielfeld.add(button5, 7, 2);
+                gridSpielfeld.add(button0, 7, 2);
+                gridSpielfeld.add(button1, 6, 2);
+                gridSpielfeld.add(button2, 5, 2);
+                gridSpielfeld.add(button3, 4, 2);
+                gridSpielfeld.add(button4, 3, 2);
+                gridSpielfeld.add(button5, 2, 2);
                 
                 gridSpielfeld.add(button6, 2, 3);
                 gridSpielfeld.add(button7, 3, 3);
@@ -502,7 +503,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 			@Override
 		    public void spielbrettVeraendert(Spielbrett spielbrett) {
 				System.out.println("spielbrettVeraendert wurde aufgerufen");
-				new Runner(spielbrett, this);
+				new Runner(spielbrett, this, client);
 			}
 
 }
