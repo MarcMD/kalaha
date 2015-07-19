@@ -135,8 +135,8 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		
 		        		hauptfenster.setScene(spielfeld);
 		        		hauptfenster.centerOnScreen();
-//						client.setSpielerName(spielerNameText.getText());
-//						client.anmelden();
+						client.setSpielerName(spielerNameText.getText());
+						client.anmelden();
 //						
 //						anmeldeUpdate(spielernameA, spielernameB);
 		        		
@@ -491,15 +491,15 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 
 		    }
 		    
-		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
-                spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
-                spielernameB.setText(client.getSpielbrett().getSpielerB().getSpielerName());
-			}
+//		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
+//                spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
+//                spielernameB.setText(client.getSpielbrett().getSpielerB().getSpielerName());
+//			}
 
 			@Override
-			public void spielbrettVeraendert() {
+		    public void spielbrettVeraendert(Spielbrett spielbrett) {
 				System.out.println("spielbrettVeraendert wurde aufgerufen");
-				this.anmeldeUpdate(spielernameA, spielernameB);
+				new Runner(spielbrett, this);
 			}
 
 }

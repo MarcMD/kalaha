@@ -1,5 +1,7 @@
 package tm.kalaha.GUI;
 
+import tm.kalaha.server.Spielbrett;
+
 /**
  * Dieses Interface wird benutzt, um den Client mit (bspw.) der GUI zu
  * verbinden. Der Client ruft die Methode spielbrettVeraendert() wenn sich das
@@ -10,6 +12,6 @@ package tm.kalaha.GUI;
  */
 public interface SpielbrettAction {
 
-	public void spielbrettVeraendert();
+	public void spielbrettVeraendert(Spielbrett spielbrett);
 
 }

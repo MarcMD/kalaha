@@ -121,7 +121,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	public synchronized void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
 		brettAusgeben();
-		meinUI.spielbrettVeraendert();
+		meinUI.spielbrettVeraendert(this.spielbrett);
 	}
 	
 	private void brettAusgeben() {
@@ -153,7 +153,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 
 	@Override
 	public void neuesSpiel() throws RemoteException {
-		server.neuesSpielStarten(spielerName);
+		this.neuesSpielStarten();		
 	}
 
 }
