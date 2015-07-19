@@ -23,4 +23,8 @@ public interface RMIClientInterface extends Remote {
 	public void neuesSpiel() throws RemoteException;
 	
 	public void setMeinUI(SpielbrettAction meinUI) throws RemoteException;
+	
+	public void sendeChatNachrichtAnServer() throws RemoteException;
+	
+	public String empfangechatNachrichtVonServer(String nachricht) throws RemoteException;
 }

@@ -150,4 +150,28 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		meinSpiel.neuesSpielStarten(spielerName);
 		sendeSpielbrett();
 	}
+
+
+	@Override
+	public void chatNachrichtVonClientEmpfangen(String spielerName, String nachricht) throws RemoteException {
+		chatNachrichtAnClientSenden(spielerName+": "+nachricht);
+	}
+
+
+	@Override
+	public void chatNachrichtAnClientSenden(String nachricht) throws RemoteException {
+		try {
+			System.out.println("Nachricht an clientA schicken: "+nachricht);
+			clientA.empfangechatNachrichtVonServer(nachricht);
+		} catch (Exception e) {
+			System.out.println("Nachricht konnte nacht an clientA geschickt werden. ClientA wurde nicht gefunden.");
+		}
+		try {
+			System.out.println("Nachricht an clientB schicken: "+nachricht);
+			clientB.empfangechatNachrichtVonServer(nachricht);
+		} catch (Exception e) {
+			System.out.println("Nachricht konnte nacht an clientB geschickt werden. ClientB wurde nicht gefunden.");
+		}
+	}
+
 }

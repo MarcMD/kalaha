@@ -156,4 +156,14 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		server.neuesSpielStarten(spielerName);
 	}
 
+	public void sendeChatNachrichtAnServer(String nachricht) throws RemoteException {
+		server.chatNachrichtVonClientEmpfangen(spielerName, nachricht);
+	}
+
+	@Override
+	public String empfangechatNachrichtVonServer(String nachricht) throws RemoteException {
+		return null;
+	}
+
+	
 }
