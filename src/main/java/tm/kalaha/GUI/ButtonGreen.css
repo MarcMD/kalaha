@@ -1,5 +1,8 @@
 .button{
 	-fx-background-image: url("Muster_Gruen.jpg");
-	-fx-font: 50 arial;
-	-fx-text-fill: white;
+	-fx-font: 40 arial;
+	-fx-text-fill: red;
+	-fx-focus-color: transparent;
 }
+
+	

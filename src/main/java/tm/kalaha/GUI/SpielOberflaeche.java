@@ -444,16 +444,8 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 buttonB.setMinWidth(120);
                 buttonB.setMinHeight(260);
-                //EventHandler for Buttons
-                buttonB.setOnAction(new EventHandler<ActionEvent>() {
-         
-                    @Override
-                    public void handle(ActionEvent event) {
-                        buttonB.setText("0");
-                    }
-                });
-                
-                
+                buttonB.setStyle("-fx-stroke: firebrick; -fx-stroke-width: 2px;");
+             
                 
                 GridPane gridSpielfeld = new GridPane();
 	               
