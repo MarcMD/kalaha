@@ -39,6 +39,20 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 	Label spielernameA = null;
 	Label spielernameB = null;
 	Label fehlerAusgabe = null;
+	Button buttonA = null;
+	Button button0 = null;
+	Button button1 = null;
+	Button button2 = null;
+	Button button3 = null;
+	Button button4 = null;
+	Button button5 = null;
+	Button button6 = null;
+	Button button7 = null;
+	Button button8 = null;
+	Button button9 = null;
+	Button button10 = null;
+	Button button11 = null;
+	Button buttonB = null;
 									
 			
 	
@@ -195,7 +209,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 dropShadowRund.setColor(Color.color(0.4, 0.5, 0.5));
                
    	        	
-                Button buttonA = new Button();
+                buttonA = new Button();
                 buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
                 double radiusSammelMulden =10;
                 buttonA.setShape(new Circle(radiusSammelMulden));
@@ -205,7 +219,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 buttonA.setMinHeight(260);
                 buttonA.setEffect(dropShadowRund);
                                 
-                Button button0 = new Button();
+                button0 = new Button();
                 button0.setText("" + client.getSpielbrett().getMulden()[0].getAnzahlSteine());
                 double r = 30;
                 button0.setShape(new Circle(r));
@@ -224,7 +238,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button1 = new Button();
+                button1 = new Button();
                 button1.setText("" + client.getSpielbrett().getMulden()[1].getAnzahlSteine());
                 button1.setShape(new Circle(r));
    	        	button1.setMinSize(2*r, 2*r);
@@ -242,7 +256,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button2 = new Button();
+                button2 = new Button();
                 button2.setText("" + client.getSpielbrett().getMulden()[2].getAnzahlSteine());
                 button2.setShape(new Circle(r));
    	        	button2.setMinSize(2*r, 2*r);
@@ -260,7 +274,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button3 = new Button();
+                button3 = new Button();
                 button3.setText("" + client.getSpielbrett().getMulden()[3].getAnzahlSteine());
                 button3.setShape(new Circle(r));
    	        	button3.setMinSize(2*r, 2*r);
@@ -278,7 +292,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button4 = new Button();
+                button4 = new Button();
                 button4.setText("" + client.getSpielbrett().getMulden()[4].getAnzahlSteine());
                 button4.setShape(new Circle(r));
    	        	button4.setMinSize(2*r, 2*r);
@@ -296,7 +310,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button5 = new Button();
+                button5 = new Button();
                 button5.setText("" + client.getSpielbrett().getMulden()[5].getAnzahlSteine());
                 button5.setShape(new Circle(r));
    	        	button5.setMinSize(2*r, 2*r);
@@ -314,7 +328,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button6 = new Button();
+                button6 = new Button();
                 button6.setText("" + client.getSpielbrett().getMulden()[6].getAnzahlSteine());
                 button6.setShape(new Circle(r));
    	        	button6.setMinSize(2*r, 2*r);
@@ -332,7 +346,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button7 = new Button();
+                button7 = new Button();
                 button7.setText("" + client.getSpielbrett().getMulden()[7].getAnzahlSteine());
                 button7.setShape(new Circle(r));
    	        	button7.setMinSize(2*r, 2*r);
@@ -350,7 +364,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button8 = new Button();
+                button8 = new Button();
                 button8.setText("" + client.getSpielbrett().getMulden()[8].getAnzahlSteine());
                 button8.setShape(new Circle(r));
    	        	button8.setMinSize(2*r, 2*r);
@@ -368,7 +382,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button9 = new Button();
+                button9 = new Button();
                 button9.setText("" + client.getSpielbrett().getMulden()[9].getAnzahlSteine());
                 button9.setShape(new Circle(r));
    	        	button9.setMinSize(2*r, 2*r);
@@ -386,7 +400,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button10 = new Button();
+                button10 = new Button();
                 button10.setText("" + client.getSpielbrett().getMulden()[10].getAnzahlSteine());
                 button10.setShape(new Circle(r));
    	        	button10.setMinSize(2*r, 2*r);
@@ -404,7 +418,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button button11 = new Button();
+                button11 = new Button();
                 button11.setText("" + client.getSpielbrett().getMulden()[11].getAnzahlSteine());
                 button11.setShape(new Circle(r));
    	        	button11.setMinSize(2*r, 2*r);
@@ -422,8 +436,8 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                     }
                 });
                 
-                Button buttonB = new Button();
-                buttonB.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
+                buttonB = new Button();
+                buttonB.setText("" + client.getSpielbrett().getSpielerB().getGewonneneSteine());
                 buttonB.setShape(new Circle(radiusSammelMulden));
                 buttonB.getStylesheets().add
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
