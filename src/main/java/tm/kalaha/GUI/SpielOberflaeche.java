@@ -137,13 +137,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		        		hauptfenster.centerOnScreen();
 						client.setSpielerName(spielerNameText.getText());
 						client.anmelden();
-//						
-//						anmeldeUpdate(spielernameA, spielernameB);
-		        		
-		        		/*
-		        		 * aufSpielerWarten soll angezeigt werden, bis vom Server 
-		        		 * gemeldet wird dass der 2. Spieler da ist
-		        		 */
+
 
 		        	}
 		        });
@@ -490,11 +484,6 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 hauptfenster.show();
 
 		    }
-		    
-//		    public void anmeldeUpdate(Label spielernameA, Label spielernameB){
-//                spielernameA.setText(client.getSpielbrett().getSpielerA().getSpielerName());
-//                spielernameB.setText(client.getSpielbrett().getSpielerB().getSpielerName());
-//			}
 
 			@Override
 		    public void spielbrettVeraendert(Spielbrett spielbrett) {
