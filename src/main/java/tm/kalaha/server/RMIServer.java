@@ -26,6 +26,7 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	private RMIClientInterface clientA = null;
 	private RMIClientInterface clientB = null;
 	
+	
 	public RMIServer() throws RemoteException {
 		String bindURL = null;
 		try {

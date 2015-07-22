@@ -17,12 +17,13 @@ import tm.kalaha.serverInterface.ServerInterface;
 public class RMIClient extends UnicastRemoteObject implements RMIClientInterface, Runnable {
 	
 	private static final long serialVersionUID = 6487865781693539839L;
-	private static final String HOST ="localhost";
+	private String host = "localhost";
 	private static final String BIND_NAME = "RMI-Server";
 	
 	private String spielerName;
 	private Spielbrett spielbrett = new Spielbrett();
 	ServerInterface server = null; 
+	String bindURL = null;
 	
 	private SpielbrettAction meinUI; 
 	
@@ -41,6 +42,25 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	
 	public void anmelden() {
 		try {
+			bindURL = "rmi://"+host+"/" +BIND_NAME;
+			server = (ServerInterface) Naming.lookup(bindURL);
+		} catch (NotBoundException e) {
+			System.out.println("Server ist nicht gebunden");
+			System.out.println(e.getMessage());
+		} catch (MalformedURLException e) {
+			System.out.println("URL ungültig:");
+			System.out.println(e.getMessage());
+		} catch (RemoteException e) {
+			System.out.println("Fehler während Kommunikation");
+			System.out.println(e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Sonstiger Fehler"); 
+			System.out.println(e.getMessage());
+			System.out.println(e.getStackTrace());
+		}
+		
+		try {
+			System.out.println("Host: " + host);
 			server.anmelden(this);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -79,23 +99,23 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	
 	public void run() {
 		//Verbindung aufbauen 
-		try {
-			String bindURL = "rmi://"+HOST+"/" +BIND_NAME;
-			server = (ServerInterface) Naming.lookup(bindURL);
-		} catch (NotBoundException e) {
-			System.out.println("Server ist nicht gebunden");
-			System.out.println(e.getMessage());
-		} catch (MalformedURLException e) {
-			System.out.println("URL ungültig:");
-			System.out.println(e.getMessage());
-		} catch (RemoteException e) {
-			System.out.println("Fehler während Kommunikation");
-			System.out.println(e.getMessage());
-		} catch (Exception e) {
-			System.out.println("Sonstiger Fehler"); 
-			System.out.println(e.getMessage());
-			System.out.println(e.getStackTrace());
-		}
+//		try {
+//			String bindURL = "rmi://"+host+"/" +BIND_NAME;
+//			server = (ServerInterface) Naming.lookup(bindURL);
+//		} catch (NotBoundException e) {
+//			System.out.println("Server ist nicht gebunden");
+//			System.out.println(e.getMessage());
+//		} catch (MalformedURLException e) {
+//			System.out.println("URL ungültig:");
+//			System.out.println(e.getMessage());
+//		} catch (RemoteException e) {
+//			System.out.println("Fehler während Kommunikation");
+//			System.out.println(e.getMessage());
+//		} catch (Exception e) {
+//			System.out.println("Sonstiger Fehler"); 
+//			System.out.println(e.getMessage());
+//			System.out.println(e.getStackTrace());
+//		}
 		
 //		try {
 //			server.anmelden(this);
@@ -121,7 +141,7 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	public synchronized void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException {
 		this.spielbrett = spielbrett;
 		brettAusgeben();
-		meinUI.spielbrettVeraendert();
+		meinUI.spielbrettVeraendert(this.spielbrett);
 	}
 	
 	private void brettAusgeben() {
@@ -153,7 +173,11 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 
 	@Override
 	public void neuesSpiel() throws RemoteException {
-		server.neuesSpielStarten(spielerName);
+		this.neuesSpielStarten();		
+	}
+
+	public void setHost(String host) {
+		this.host = host;
 	}
 	
 	@Override

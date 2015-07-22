@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import tm.kalaha.GUI.SpielbrettAction;
 import tm.kalaha.client.RMIClient;
+import tm.kalaha.server.Spielbrett;
 import tm.kalaha.serverInterface.RMIClientInterface;
 
 /**
@@ -133,7 +134,13 @@ public class NerdUI implements SpielbrettAction {
 		System.out.println("");
 		System.out.print("> ");
 	}
+	
+	public void spielbrettVeraendert(Spielbrett spielbrett) {
+		this.spielbrettVeraendert();
+	}
 
+	
+	
 	/**
 	 * Wird von der Klasse EingabeThread genutzt, um direkt auf dem Client
 	 * Methoden ausführen zu können.
