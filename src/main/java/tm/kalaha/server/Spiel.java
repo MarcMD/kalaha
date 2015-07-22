@@ -161,6 +161,9 @@ public class Spiel {
 	 * @param aktuellerSpieler
 	 * @return true wenn das Spiel zu Ende ist
 	 */
+	
+//Unnötige Änderung für Git-Test
+	
 	public boolean istSpielZuEnde(Spieler aktuellerSpieler) {
 
 		boolean alleFelderLeer = false;
