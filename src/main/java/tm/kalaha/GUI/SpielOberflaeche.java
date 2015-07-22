@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -32,6 +33,7 @@ import javafx.scene.shape.Circle;
 import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.stage.WindowEvent;
 
 @SuppressWarnings({ "restriction" })
 public class SpielOberflaeche extends Application implements SpielbrettAction {
@@ -80,6 +82,12 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		    	
 		    	hauptfenster.setTitle("Kalaha");
 		    	hauptfenster.centerOnScreen();
+		    	hauptfenster.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    	    @Override public void handle(WindowEvent t) {
+		    	        client.abmelden();
+		    	        Platform.exit();
+		    	    }
+		    	});
 		    	
 		    	//Client bekommt dieses Objekt übergeben und kann dann
 		    	//die Methode spielbrettVeraendert() aufrufen
@@ -172,18 +180,11 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
    	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
-                spielernameA.setStyle("-fx-border-width: 2px; -fx-border-color: white;");
+//              spielernameA.setStyle("-fx-border-width: 2px; -fx-border-color: white;");
                 
                 spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
                 spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 30));
-
-//                String werIstDran = null;
-//                if(client.getSpielbrett().getSpielerA().isIstAmZug()){
-//                	werIstDran = client.getSpielbrett().getSpielerA().getSpielerName();
-//                }else{
-//                	werIstDran = client.getSpielbrett().getSpielerB().getSpielerName();
-//                }
                 
                 istAmZug = new Label();
                 istAmZug.setTextFill(Color.ANTIQUEWHITE);
@@ -488,7 +489,23 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 gridSpielfeld.add(outputTxt, 3, 5, 4, 1);
                 gridSpielfeld.add(inputTxt, 3, 6, 4, 1);
                 
-                spielfeld = new Scene(gridSpielfeld, 1200, 700);
+                GridPane gridChat = new GridPane();
+                gridChat.setAlignment(Pos.CENTER);
+                gridChat.setHgap(20);
+                gridChat.setVgap(20);
+                gridChat.setPadding(new Insets(25, 25, 25, 25));
+                
+                gridChat.add(textEingabe, 1, 5, 1, 1);
+                
+                gridChat.add(outputTxt, 2, 1, 1, 4);
+                gridChat.add(inputTxt, 2, 5, 1, 1);
+                
+                VBox vBox = new VBox();
+                vBox.setSpacing(5.0); 
+                vBox.setPadding(new Insets(5,5,5,5));
+                vBox.getChildren().addAll(gridSpielfeld, gridChat);
+                
+                spielfeld = new Scene(vBox, 1200, 700);
                 spielfeld.getStylesheets().add
                 (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 //------------>	Ende Spielfeld Scene  
