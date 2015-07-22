@@ -1,7 +1,9 @@
 .button{
 	-fx-background-image: url("Muster_Blau.jpg");
 	-fx-font: 40 arial;
-	-fx-text-fill: orange;
+	-fx-text-fill: white;
 	-fx-focus-color: transparent;
+	-fx-border-width: 1px; 
+	-fx-border-color: white;
 
 }

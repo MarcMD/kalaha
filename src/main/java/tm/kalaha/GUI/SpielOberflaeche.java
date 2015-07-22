@@ -3,7 +3,7 @@ package tm.kalaha.GUI;
 import java.rmi.RemoteException;
 
 import javafx.application.Platform;
-import javafx.scene.effect.DropShadow;
+//import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import tm.kalaha.client.RMIClient;
 import tm.kalaha.server.Spielbrett;
@@ -28,6 +28,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.text.FontPosture;
 import javafx.scene.shape.Circle;
+import javafx.geometry.Pos;
 
 @SuppressWarnings({ "restriction" })
 public class SpielOberflaeche extends Application implements SpielbrettAction {
@@ -105,11 +106,11 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		        TextField ipAdresseText = new TextField();
 		        gridAnmeldung.add(ipAdresseText, 1, 2);
 		        
-		        DropShadow ds = new DropShadow();
-		        ds.setOffsetY(3.0f);
-		        ds.setOffsetX(5.0f);
-		        ds.setColor(Color.BROWN);
-		        
+//		        DropShadow ds = new DropShadow();
+//		        ds.setOffsetY(3.0f);
+//		        ds.setOffsetX(5.0f);
+//		        ds.setColor(Color.BROWN);
+//		        
 		        InnerShadow is = new InnerShadow();
 		        is.setOffsetY(0.3f);
 		        is.setColor(Color.BLACK);
@@ -166,6 +167,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
    	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
+                spielernameA.setStyle("-fx-border-width: 2px; -fx-border-color: white;");
                 
                 spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
@@ -186,7 +188,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
                 fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 18));
                 
-                Label textEingabe = new Label("Eingabe:");
+                Label textEingabe = new Label("Eingabe :");
                 textEingabe.setTextFill(Color.ANTIQUEWHITE);
                 textEingabe.setFont(Font.font("Arial", FontPosture.ITALIC, 16));
                 
@@ -201,15 +203,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 
                 inputTxt = new TextField();
                 inputTxt.setFocusTraversable(true);
-                //Mit Backend verknüpfen
-                
-                DropShadow dropShadowRund = new DropShadow();
-                dropShadowRund.setRadius(10.0);
-                dropShadowRund.setOffsetX(3.0);
-                dropShadowRund.setOffsetY(3.0);
-                dropShadowRund.setColor(Color.color(0.4, 0.5, 0.5));
-               
-   	        	
+      	
                 buttonA = new Button();
                 buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
                 double radiusSammelMulden =10;
@@ -218,7 +212,6 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 buttonA.setMinWidth(120);
                 buttonA.setMinHeight(260);
-                buttonA.setEffect(dropShadowRund);
                                 
                 button0 = new Button();
                 button0.setText("" + client.getSpielbrett().getMulden()[0].getAnzahlSteine());
