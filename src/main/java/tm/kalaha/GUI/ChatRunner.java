@@ -22,6 +22,7 @@ public class ChatRunner extends Thread {
 
 		try {
 			Platform.runLater(() -> this.gui.outputTxt.setText(client.getNeueNachricht() + "\n" + gui.outputTxt.getText()));
+			Platform.runLater(() -> this.gui.inputTxt.setText(""));
 			
 	
 		} catch (Exception e) {
