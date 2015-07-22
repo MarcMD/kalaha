@@ -25,6 +25,9 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	ServerInterface server = null; 
 	String bindURL = null;
 	
+	//Die jeweils aktuellste Chat Nachricht 
+	private String neueNachricht = "Chat wurde gestartet";
+	
 	private SpielbrettAction meinUI; 
 	
 	public RMIClient (String n) throws RemoteException {
@@ -181,14 +184,22 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	}
 	
 	@Override
-	public String empfangechatNachrichtVonServer(String nachricht) throws RemoteException {
-		return null;
+	public void empfangechatNachrichtVonServer(String nachricht) throws RemoteException {
+		this.setNeueNachricht(nachricht);
+		meinUI.chatVeraendert(nachricht);
 	}
 
 	@Override
 	public void sendeChatNachrichtAnServer(String nachricht) throws RemoteException {
 		server.chatNachrichtVonClientEmpfangen(spielerName, nachricht);
-		
+	}
+
+	public String getNeueNachricht() {
+		return neueNachricht;
+	}
+
+	public void setNeueNachricht(String neueNachricht) {
+		this.neueNachricht = neueNachricht;
 	}
 
 	

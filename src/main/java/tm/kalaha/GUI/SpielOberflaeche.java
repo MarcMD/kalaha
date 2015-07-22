@@ -1,5 +1,6 @@
 package tm.kalaha.GUI;
 
+//import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 
 import javafx.application.Platform;
@@ -24,11 +25,13 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+//import javafx.event.ActionEvent;
+//import javafx.event.EventHandler;
 import javafx.scene.text.FontPosture;
 import javafx.scene.shape.Circle;
 import javafx.geometry.Pos;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
 @SuppressWarnings({ "restriction" })
 public class SpielOberflaeche extends Application implements SpielbrettAction {
@@ -41,6 +44,8 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 	Label spielernameB = null;
 	Label istAmZug = null;
 	Label fehlerAusgabe = null;
+	TextArea outputTxt = null;
+    TextField inputTxt = null;
 	Button buttonA = null;
 	Button button0 = null;
 	Button button1 = null;
@@ -192,17 +197,26 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 textEingabe.setTextFill(Color.ANTIQUEWHITE);
                 textEingabe.setFont(Font.font("Arial", FontPosture.ITALIC, 16));
                 
-                TextArea outputTxt;
-                TextField inputTxt;
+              
                 
                 outputTxt = new TextArea();
                 outputTxt.setDisable(false);
                 outputTxt.setEditable(false);
                 outputTxt.setFocusTraversable(false);
-                outputTxt.setText("TestChatText...");
-
                 inputTxt = new TextField();
                 inputTxt.setFocusTraversable(true);
+                inputTxt.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                	@Override
+                	public void handle(KeyEvent e) {
+                		if(e.getCode().equals(KeyCode.ENTER)) {
+                			try {
+								client.sendeChatNachrichtAnServer(inputTxt.getText());
+							} catch (RemoteException e1) {
+								System.out.println("Nachricht konnte nicht gesendet werden. RemoteException.");
+							}
+                		}
+                	}
+                });
       	
                 buttonA = new Button();
                 buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
@@ -489,6 +503,11 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		    public void spielbrettVeraendert(Spielbrett spielbrett) {
 				System.out.println("spielbrettVeraendert wurde aufgerufen");
 				new Runner(spielbrett, this, client);
+			}
+
+			@Override
+			public void chatVeraendert(String nachricht) {
+				new ChatRunner(nachricht, this, client);
 			}
 
 }

@@ -26,5 +26,5 @@ public interface RMIClientInterface extends Remote {
 	
 	public void sendeChatNachrichtAnServer(String nachricht) throws RemoteException;
 	
-	public String empfangechatNachrichtVonServer(String nachricht) throws RemoteException;
+	public void empfangechatNachrichtVonServer(String nachricht) throws RemoteException;
 }

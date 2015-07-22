@@ -14,4 +14,6 @@ public interface SpielbrettAction {
 
 	public void spielbrettVeraendert(Spielbrett spielbrett);
 
+	public void chatVeraendert(String nachricht);
+
 }
