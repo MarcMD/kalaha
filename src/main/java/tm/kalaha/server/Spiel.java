@@ -99,6 +99,13 @@ public class Spiel {
 									.setFehlerMeldung(aktuellerSpieler.getSpielerName() + " hat das Spiel gewonnen");
 							spielbrett.getSpielerB()
 									.setFehlerMeldung(aktuellerSpieler.getSpielerName() + " hat das Spiel gewonnen");
+							if(spielbrett.getSpielerA().isHatGewonnen()) {
+								spielbrett.getSpielerA().setFehlerMeldung(spielbrett.getSpielerA().getSpielerName() + " hat das Spiel gewonnen");
+								spielbrett.getSpielerB().setFehlerMeldung(spielbrett.getSpielerA().getSpielerName() + " hat das Spiel gewonnen");
+							} else if(spielbrett.getSpielerB().isHatGewonnen()) {
+								spielbrett.getSpielerA().setFehlerMeldung(spielbrett.getSpielerB().getSpielerName() + " hat das Spiel gewonnen");
+								spielbrett.getSpielerB().setFehlerMeldung(spielbrett.getSpielerB().getSpielerName() + " hat das Spiel gewonnen");
+							}
 						}
 	
 						// nächster Spieler ist dran
@@ -174,7 +181,7 @@ public class Spiel {
 				}
 			}
 			if (alleFelderLeer) {
-				aktuellerSpieler.setHatGewonnen(true);
+				bestimmeGewinner().setHatGewonnen(true);;
 			}
 		}
 		if (aktuellerSpieler.equals(spielbrett.getSpielerA())) {
@@ -185,10 +192,22 @@ public class Spiel {
 				}
 			}
 			if (alleFelderLeer) {
-				aktuellerSpieler.setHatGewonnen(true);
+				bestimmeGewinner().setHatGewonnen(true);
 			}
 		}
 		return alleFelderLeer;
+	}
+
+	/**
+	 * Wird von istSpielZuEnde benutzt um zu bestimmen, wer das Spiel gewonnen hat
+	 * und prüft, welcher Spieler die meisten Steine gewonnen hat. 
+	 */
+	private Spieler bestimmeGewinner() {
+		if(spielbrett.getSpielerA().getGewonneneSteine() > spielbrett.getSpielerB().getGewonneneSteine()) {
+			return spielbrett.getSpielerA();
+		} else {
+			return spielbrett.getSpielerB();
+		}
 	}
 
 	/**

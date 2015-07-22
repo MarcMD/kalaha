@@ -92,14 +92,6 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 		}
 	}
 	
-	public void neuesSpielStarten() {
-		try {
-			server.neuesSpielStarten(spielerName);
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-	}
-	
 	public void run() {
 		//Verbindung aufbauen 
 //		try {
@@ -176,7 +168,11 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 
 	@Override
 	public void neuesSpiel() throws RemoteException {
-		this.neuesSpielStarten();		
+		try {
+			server.neuesSpielStarten(spielerName);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void setHost(String host) {
