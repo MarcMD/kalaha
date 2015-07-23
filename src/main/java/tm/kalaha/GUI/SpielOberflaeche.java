@@ -4,7 +4,7 @@ package tm.kalaha.GUI;
 import java.rmi.RemoteException;
 
 import javafx.application.Platform;
-//import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import tm.kalaha.client.RMIClient;
 import tm.kalaha.server.Spielbrett;
@@ -41,6 +41,7 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 	Scene anmeldung = null;
 	Scene aufSpielerWarten = null;
 	Scene spielfeld = null;
+	Scene regeln = null;
 	static RMIClient client;
 	Label spielernameA = null;
 	Label spielernameB = null;
@@ -62,6 +63,8 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 	Button button10 = null;
 	Button button11 = null;
 	Button buttonB = null;
+	Button abmeldenBtn = null;
+	Button neuesSpielStartenBtn = null;
 									
 			
 	
@@ -93,20 +96,43 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		    	//die Methode spielbrettVeraendert() aufrufen
 		    	client.setMeinUI(this);
 		    	
+		          
+
+        		DropShadow dsSchrift = new DropShadow();
+    	        dsSchrift.setOffsetY(0.5f);
+    	        dsSchrift.setColor(Color.BLACK);
+    	        
+    	        DropShadow dsChat = new DropShadow();
+    	        dsChat.setOffsetX(0.5f);
+    	        dsChat.setOffsetY(0.5f);
+    	        dsChat.setColor(Color.web("#6E573D"));
+		        
+		        InnerShadow isBtns = new InnerShadow();
+		        isBtns.setOffsetY(0.3f);
+		        isBtns.setOffsetX(0.3f);
+		        isBtns.setColor(Color.BLACK);
+
+		        InnerShadow isChat = new InnerShadow();
+		        isChat.setOffsetY(3.0f);
+		        isChat.setOffsetX(3.0f);
+		        isChat.setColor(Color.web("#6E573D"));
+		    	
 //------------> Anmeldungs Scene
 		    	GridPane gridAnmeldung = new GridPane();
 		        gridAnmeldung.setAlignment(Pos.CENTER);
-		        gridAnmeldung.setHgap(10);
-		        gridAnmeldung.setVgap(10);
+		        gridAnmeldung.setHgap(20);
+		        gridAnmeldung.setVgap(20);
 		        gridAnmeldung.setPadding(new Insets(25, 25, 25, 25));
 		        
 		        Text grussText = new Text("Willkommen in der wunderbaren Welt des Kalaha!");
-		        grussText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		        grussText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 22));
 		        grussText.setFill(Color.ANTIQUEWHITE);
+		        grussText.setEffect(dsSchrift);
 		        gridAnmeldung.add(grussText, 0, 0, 2, 1);
 		        
 		        Label spielernameLabel = new Label("Spielername:");
 		        spielernameLabel.setTextFill(Color.ANTIQUEWHITE);
+		        spielernameLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 14));
 		        gridAnmeldung.add(spielernameLabel, 0, 1);
 
 		        TextField spielerNameText = new TextField();
@@ -114,46 +140,37 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 		        
 		        Label ipAdresse = new Label("IP - Adresse:");
 		        ipAdresse.setTextFill(Color.ANTIQUEWHITE);
+		        ipAdresse.setFont(Font.font("Tahoma", FontWeight.BOLD, 14));
 		        gridAnmeldung.add(ipAdresse, 0, 2);
 		        
 		        TextField ipAdresseText = new TextField();
 		        gridAnmeldung.add(ipAdresseText, 1, 2);
-		        
-//		        DropShadow ds = new DropShadow();
-//		        ds.setOffsetY(3.0f);
-//		        ds.setOffsetX(5.0f);
-//		        ds.setColor(Color.BROWN);
-//		        
-		        InnerShadow is = new InnerShadow();
-		        is.setOffsetY(0.3f);
-		        is.setColor(Color.BLACK);
-		        
+		        gridAnmeldung.setGridLinesVisible(false);
+		     
 		        Button anmeldungBtn = new Button("Anmelden");
 		        anmeldungBtn.setTextFill(Color.ANTIQUEWHITE);
 		        anmeldungBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-		        anmeldungBtn.setStyle(" -fx-base: #9F7347;");
-		        anmeldungBtn.setEffect(is);
-		        //anmeldungBtn.setStyle("-fx-stroke: black;");
-		        //anmeldungBtn.setEffect(ds);
+		        anmeldungBtn.setStyle(" -fx-base: #009933;");
+		        anmeldungBtn.setEffect(isBtns);
 		        
 		        Button beendenBtn = new Button("Beenden");
 		        beendenBtn.setTextFill(Color.ANTIQUEWHITE);
 		        beendenBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
-		        beendenBtn.setStyle(" -fx-base: #9F7347;");
-		        beendenBtn.setEffect(is);
+		        beendenBtn.setStyle(" -fx-base: #E62E00;");
+		        beendenBtn.setEffect(isBtns);
 		        
-		        HBox hboxBtn = new HBox(10);
+		        HBox hboxBtn = new HBox(15);
 		        hboxBtn.setAlignment(Pos.BOTTOM_RIGHT);
 		        hboxBtn.getChildren().add(anmeldungBtn);
 		        hboxBtn.getChildren().add(beendenBtn);
 		        gridAnmeldung.add(hboxBtn, 1, 3);
 		        
-		        anmeldung = new Scene(gridAnmeldung, 500, 300);
+		        anmeldung = new Scene(gridAnmeldung, 700, 500);
 		        anmeldung.getStylesheets().add
                 (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 		        
 		        beendenBtn.setOnAction(e -> {
-//			     	   Platform.exit();
+			     	Platform.exit();
 		        	hauptfenster.close();
 		     	});
 		        
@@ -168,19 +185,14 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 						client.setHost(ipAdresseText.getText());
 						client.anmelden();
 
-
 		        	}
 		        });
-		        
 //------------> Ende Anmeldungs Scene
-		        
 
-   	        	
 //------------> Start Spielfeld Scene
    	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
-//              spielernameA.setStyle("-fx-border-width: 2px; -fx-border-color: white;");
                 
                 spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
@@ -191,21 +203,27 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 istAmZug.setFont(Font.font("Arial", FontPosture.ITALIC, 22));
                 
                 fehlerAusgabe = new Label();
-                fehlerAusgabe.setTextFill(Color.web("#FF4D4D"));
-                fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 18));
+                fehlerAusgabe.setFont(Font.font("Arial", FontWeight.BOLD, 22));
+                fehlerAusgabe.setStyle("-fx-text-fill: red;");
+                fehlerAusgabe.setEffect(dsSchrift);
                 
+                                
                 Label textEingabe = new Label("Eingabe :");
                 textEingabe.setTextFill(Color.ANTIQUEWHITE);
-                textEingabe.setFont(Font.font("Arial", FontPosture.ITALIC, 16));
-                
-              
-                
+                textEingabe.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+
                 outputTxt = new TextArea();
                 outputTxt.setDisable(false);
                 outputTxt.setEditable(false);
                 outputTxt.setFocusTraversable(false);
+                outputTxt.setStyle("-fx-text-fill: #424242; -fx-base: #E1D398;  -fx-font: 14 arial;");
+                outputTxt.setEffect(isChat);
+                outputTxt.setMinHeight(150);
+                
                 inputTxt = new TextField();
                 inputTxt.setFocusTraversable(true);
+                inputTxt.setEffect(isChat);
+                inputTxt.setStyle("-fx-base: #E1D398; -fx-font: 14 arial;");
                 inputTxt.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 	@Override
                 	public void handle(KeyEvent e) {
@@ -218,6 +236,101 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 		}
                 	}
                 });
+                
+                Button regelnBtn = new Button("           Regeln           ");
+                regelnBtn.setTextFill(Color.ANTIQUEWHITE);
+                regelnBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                regelnBtn.setStyle("-fx-base: #0000B8; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                regelnBtn.setEffect(isBtns);
+                regelnBtn.setOnAction(new EventHandler<ActionEvent>() {
+			        
+		        	@Override
+			        public void handle(ActionEvent e) {
+		        		GridPane gridRegeln = new GridPane();
+		        		gridRegeln.setAlignment(Pos.CENTER);
+		        		gridRegeln.setHgap(10);
+		        		gridRegeln.setVgap(10);
+		        		gridRegeln.setPadding(new Insets(40, 40, 40, 40));
+		        						        
+		        		String regelnString = 
+		        				"Zu Beginn werden in jede runde Mulde der Spieler 4 Steine gelegt \n" +
+		        				"Gewinner ist am Ende, wer mehr Steine in seinem 'Kalaha' hat, also \n" +
+		        				"der Ovalen Mulde am Spielrand.\n"+
+		        				"\n"+
+		        				"Wer am Zug ist, leert eine seiner Mulden und verteilt so die Kugeln, \n"+
+		        				"jeweils eine, reihum gegen den Uhrzeigersinn in die folgenden Mulden. \n"+
+		        				"Fällt die letzte Kugel in eine Mulde, in der sich vorher 2 oder 3 Steine \n"+
+		        				"befanden, so bekommt der Spieler die Steine in sein Kalaha gelegt. Sind \n"+
+		        				"nun im vorletzten Feld in das ein Stein gelegt wurde 3 oder 4 Steine \n"+
+		        				"werden diese ebenfalls in das Kalaha gelegt. So werden alle Mulden die \n"+
+		        				"in dem Spielzug durch Steine gefüllt wurden reihum überprüft.\n"+
+		        				"\n" +
+		        				"Die Spieler Wechseln sich so lange ab, bis ein Spieler nicht mehr \n"+
+		        				"ziehen kann, da er keine Steine mehr in seinen Mulden hat.\n"+
+		        				"\n";
+		        		
+				        Text regelText = new Text(regelnString);
+				        regelText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+				        regelText.setFill(Color.ANTIQUEWHITE);
+				        regelText.setEffect(dsSchrift);
+				        				        
+				        Button zurueckBtn = new Button("Zurück zum Spiel");
+				        zurueckBtn.setTextFill(Color.ANTIQUEWHITE);
+				        zurueckBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+				        zurueckBtn.setStyle(" -fx-base: #0000B8; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+				        zurueckBtn.setEffect(isBtns);
+				        zurueckBtn.setOnAction(new EventHandler<ActionEvent>() {
+					        
+				        	@Override
+					        public void handle(ActionEvent e) {
+				        		hauptfenster.setScene(spielfeld);
+				        		hauptfenster.centerOnScreen();
+				           	}
+				        });
+				        
+				        gridRegeln.add(regelText, 0, 0);
+				        gridRegeln.add(zurueckBtn, 0, 2);
+
+				        regeln = new Scene(gridRegeln, 700, 500);
+				        regeln.getStylesheets().add
+		                (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
+		        		hauptfenster.setScene(regeln);
+		        		hauptfenster.centerOnScreen();
+		        	}
+		        });
+                
+                abmeldenBtn = new Button("        Abmelden        ");
+                abmeldenBtn.setTextFill(Color.ANTIQUEWHITE);
+		        abmeldenBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+		        abmeldenBtn.setStyle("-fx-base: #E62E00; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+		        abmeldenBtn.setEffect(isBtns);
+                abmeldenBtn.setOnAction(new EventHandler<ActionEvent>() {
+			        
+		        	@Override
+			        public void handle(ActionEvent e) {
+		        		client.abmelden();
+		        		 Platform.exit();
+		        	}
+		        });
+                
+                neuesSpielStartenBtn = new Button("Neues Spiel Starten");
+                neuesSpielStartenBtn.setTextFill(Color.ANTIQUEWHITE);
+                neuesSpielStartenBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
+                neuesSpielStartenBtn.setStyle(" -fx-base: #009933; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
+                neuesSpielStartenBtn.setEffect(isBtns);
+                neuesSpielStartenBtn.setOpacity(50.0);
+                neuesSpielStartenBtn.setOnAction(new EventHandler<ActionEvent>() {
+			        
+		        	@Override
+			        public void handle(ActionEvent e) {
+		        		try {
+							client.neuesSpiel();
+						} catch (RemoteException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+		        	}
+		        });
       	
                 buttonA = new Button();
                 buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
@@ -460,8 +573,8 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 gridSpielfeld.setAlignment(Pos.CENTER);
                 gridSpielfeld.setHgap(20);
                 gridSpielfeld.setVgap(20);
-                gridSpielfeld.setPadding(new Insets(25, 25, 25, 25));
-//              grid.setGridLinesVisible(true);
+                gridSpielfeld.setPadding(new Insets(25, 25, 5, 25));
+                gridSpielfeld.setGridLinesVisible(false);
                 
                 gridSpielfeld.add(spielernameA, 1, 1, 1, 1);
                 gridSpielfeld.add(spielernameB, 8, 1, 1, 1);
@@ -482,35 +595,51 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
                 gridSpielfeld.add(button10, 6, 3);
                 gridSpielfeld.add(button11, 7, 3);
                 gridSpielfeld.add(buttonB, 8, 2 , 1, 2);
-                
-                gridSpielfeld.add(fehlerAusgabe, 3, 4, 4, 1);
-                gridSpielfeld.add(textEingabe, 2, 6);
-                
-                gridSpielfeld.add(outputTxt, 3, 5, 4, 1);
-                gridSpielfeld.add(inputTxt, 3, 6, 4, 1);
-                
+                                            
                 GridPane gridChat = new GridPane();
-                gridChat.setAlignment(Pos.CENTER);
-                gridChat.setHgap(20);
+                gridChat.setHgap(10);
                 gridChat.setVgap(20);
-                gridChat.setPadding(new Insets(25, 25, 25, 25));
+                gridChat.setPadding(new Insets(5, 5, 5, 5));
                 
-                gridChat.add(textEingabe, 1, 5, 1, 1);
+                gridChat.add(fehlerAusgabe, 2, 1);
+                gridChat.add(textEingabe, 1, 3);
+                gridChat.add(outputTxt, 2, 2);
+                gridChat.add(inputTxt, 2, 3);
+                gridChat.setGridLinesVisible(false);
+                                                
+                VBox vBoxButtons = new VBox();
+                vBoxButtons.setAlignment(Pos.CENTER_RIGHT);
+                vBoxButtons.setSpacing(20.0); 
+                vBoxButtons.setPadding(new Insets(10,10,10,10));
+                vBoxButtons.getChildren().add(regelnBtn);
+                vBoxButtons.getChildren().add(neuesSpielStartenBtn);
+                vBoxButtons.getChildren().add(abmeldenBtn);
+                vBoxButtons.setVisible(true);              
                 
-                gridChat.add(outputTxt, 2, 1, 1, 4);
-                gridChat.add(inputTxt, 2, 5, 1, 1);
+                HBox platzhalter = new HBox();
+                Label platzhalterLabel2 = new Label("                          ");
+                platzhalter.getChildren().add(platzhalterLabel2);
+                platzhalter.setVisible(true);
+                                                
+                HBox hBoxChatBtn = new HBox();
+                hBoxChatBtn.setSpacing(20);
+                hBoxChatBtn.setAlignment(Pos.BOTTOM_CENTER);
+                hBoxChatBtn.setMinWidth(1200);
+                hBoxChatBtn.getChildren().addAll(platzhalter, gridChat, vBoxButtons);
+                hBoxChatBtn.setVisible(true);
+                               
+                VBox vBoxGesamt = new VBox();
+                vBoxGesamt.setSpacing(0); 
+//                vBoxGesamt.setPadding(new Insets(5,5,5,5));
+                vBoxGesamt.getChildren().addAll(gridSpielfeld, hBoxChatBtn);
+                vBoxGesamt.setVisible(true);
+
                 
-                VBox vBox = new VBox();
-                vBox.setSpacing(5.0); 
-                vBox.setPadding(new Insets(5,5,5,5));
-                vBox.getChildren().addAll(gridSpielfeld, gridChat);
-                
-                spielfeld = new Scene(vBox, 1200, 700);
+                spielfeld = new Scene(vBoxGesamt, 1200, 700);
                 spielfeld.getStylesheets().add
                 (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 //------------>	Ende Spielfeld Scene  
-                
-                
+                               
                 hauptfenster.setScene(anmeldung);
                 hauptfenster.show();
 
