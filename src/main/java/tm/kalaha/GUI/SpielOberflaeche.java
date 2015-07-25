@@ -192,11 +192,11 @@ public class SpielOberflaeche extends Application implements SpielbrettAction {
 //------------> Start Spielfeld Scene
    	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
-                spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
+                spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 28));
                 
                 spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
-                spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 30));
+                spielernameB.setFont(Font.font("Arial", FontWeight.NORMAL, 28));
                 
                 istAmZug = new Label();
                 istAmZug.setTextFill(Color.ANTIQUEWHITE);
