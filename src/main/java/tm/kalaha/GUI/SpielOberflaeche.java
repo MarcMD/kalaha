@@ -1,10 +1,8 @@
 package tm.kalaha.GUI;
 
-//import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 
 import javafx.application.Platform;
-//import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.InnerShadow;
 import tm.kalaha.client.RMIClient;
 import tm.kalaha.server.Spielbrett;
@@ -27,16 +25,21 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
-//import javafx.event.ActionEvent;
-//import javafx.event.EventHandler;
 import javafx.scene.text.FontPosture;
 import javafx.scene.shape.Circle;
-import javafx.geometry.Pos;
+//import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 
 @SuppressWarnings({ "restriction" })
+/**
+ * 
+ * @author Tanja Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die für das Spiel benötigt werden.
+ * 
+ * 
+ *
+ */
 public class SpielOberflaeche extends Application implements UserInterface {
 
 	Scene anmeldung = null;
@@ -67,17 +70,20 @@ public class SpielOberflaeche extends Application implements UserInterface {
 			
 	
 		 public static void main(String[] args) {
-			 try {
+	   	    try {
 				 client = new RMIClient("DummyName");
 				 
 
 			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		        launch(args);
 		 }
 		    
+
+		     /**
+		      *  Die Stage ist der Schauplatz für die verschiedenen Scenen, die in der GUI gezeigt werden.
+		      */
 		    @Override
 		    public void start(Stage hauptfenster) {
 		    	
@@ -89,12 +95,16 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		    	        Platform.exit();
 		    	    }
 		    	});
+		    	/*
+		     	 * Client bekommt dieses Objekt übergeben und kann dann
+		    	 * die Methode spielbrettVeraendert() aufrufen
+		    	 */
+		       	client.setMeinUI(this);
 		    	
-		    	//Client bekommt dieses Objekt übergeben und kann dann
-		    	//die Methode spielbrettVeraendert() aufrufen
-		    	client.setMeinUI(this);
-		    	
-//------------> Anmeldungs Scene
+		       	
+		    	/*
+		    	 * Code der Szene für die Anmeldung.
+		    	 */
 		    	GridPane gridAnmeldung = new GridPane();
 		        gridAnmeldung.setAlignment(Pos.CENTER);
 		        gridAnmeldung.setHgap(10);
@@ -120,11 +130,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		        TextField ipAdresseText = new TextField();
 		        gridAnmeldung.add(ipAdresseText, 1, 2);
 		        
-//		        DropShadow ds = new DropShadow();
-//		        ds.setOffsetY(3.0f);
-//		        ds.setOffsetX(5.0f);
-//		        ds.setColor(Color.BROWN);
-//		        
 		        InnerShadow is = new InnerShadow();
 		        is.setOffsetY(0.3f);
 		        is.setColor(Color.BLACK);
@@ -134,8 +139,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		        anmeldungBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		        anmeldungBtn.setStyle(" -fx-base: #9F7347;");
 		        anmeldungBtn.setEffect(is);
-		        //anmeldungBtn.setStyle("-fx-stroke: black;");
-		        //anmeldungBtn.setEffect(ds);
 		        
 		        Button beendenBtn = new Button("Beenden");
 		        beendenBtn.setTextFill(Color.ANTIQUEWHITE);
@@ -154,10 +157,13 @@ public class SpielOberflaeche extends Application implements UserInterface {
                 (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 		        
 		        beendenBtn.setOnAction(e -> {
-//			     	   Platform.exit();
 		        	hauptfenster.close();
 		     	});
 		        
+		        /*
+		         * Akton für den Anmeldungsbutton: Das Spielfeld wird angezeigt, der Client bekommt einen Namen und
+		         * eine IP-Adresse und meldet sich an
+		         * */
 		        anmeldungBtn.setOnAction(new EventHandler<ActionEvent>() {
 			        
 		        	@Override
@@ -168,20 +174,15 @@ public class SpielOberflaeche extends Application implements UserInterface {
 						client.setSpielerName(spielerNameText.getText());
 						client.setHost(ipAdresseText.getText());
 						client.anmelden();
-
-
 		        	}
 		        });
-		        
-//------------> Ende Anmeldungs Scene
-		        
-
-   	        	
-//------------> Start Spielfeld Scene
+				
+				/*
+				 * Code für die Spielfeld Szene.
+				 */
    	        	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
                 spielernameA.setTextFill(Color.web("#0099FF"));
                 spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 26));
-//              spielernameA.setStyle("-fx-border-width: 2px; -fx-border-color: white;");
                 
                 spielernameB = new Label(client.getSpielbrett().getSpielerB().getSpielerName());
                 spielernameB.setTextFill(Color.web("#009900"));
@@ -198,8 +199,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                 Label textEingabe = new Label("Eingabe :");
                 textEingabe.setTextFill(Color.ANTIQUEWHITE);
                 textEingabe.setFont(Font.font("Arial", FontPosture.ITALIC, 16));
-                
-              
                 
                 outputTxt = new TextArea();
                 outputTxt.setDisable(false);
@@ -220,6 +219,10 @@ public class SpielOberflaeche extends Application implements UserInterface {
                 	}
                 });
       	
+                /*
+                 * Mulden Buttons für das Spiel. Die Buttons 0-11 können die Methode muldeSpielen des Clients
+                 * aufrufen.
+                 * */
                 buttonA = new Button();
                 buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
                 double radiusSammelMulden =10;
@@ -239,7 +242,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button0.setMinWidth(120);
                 button0.setMinHeight(120);
-                //EventHandler for Buttons
                 button0.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -257,7 +259,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button1.setMinWidth(120);
                 button1.setMinHeight(120);
-                //EventHandler for Buttons
                 button1.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -275,7 +276,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button2.setMinWidth(120);
                 button2.setMinHeight(120);
-                //EventHandler for Buttons
                 button2.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -293,7 +293,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button3.setMinWidth(120);
                 button3.setMinHeight(120);
-                //EventHandler for Buttons
                 button3.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -311,7 +310,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button4.setMinWidth(120);
                 button4.setMinHeight(120);
-                //EventHandler for Buttons
                 button4.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -329,7 +327,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
                 button5.setMinWidth(120);
                 button5.setMinHeight(120);
-                //EventHandler for Buttons
                 button5.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -347,7 +344,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button6.setMinWidth(120);
                 button6.setMinHeight(120);
-                //EventHandler for Buttons
                 button6.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -365,7 +361,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button7.setMinWidth(120);
                 button7.setMinHeight(120);
-                //EventHandler for Buttons
                 button7.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -383,7 +378,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button8.setMinWidth(120);
                 button8.setMinHeight(120);
-                //EventHandler for Buttons
                 button8.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -401,7 +395,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button9.setMinWidth(120);
                 button9.setMinHeight(120);
-                //EventHandler for Buttons
                 button9.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -419,7 +412,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button10.setMinWidth(120);
                 button10.setMinHeight(120);
-                //EventHandler for Buttons
                 button10.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -437,7 +429,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
                  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
                 button11.setMinWidth(120);
                 button11.setMinHeight(120);
-                //EventHandler for Buttons
                 button11.setOnAction(new EventHandler<ActionEvent>() {
          
                     @Override
@@ -454,15 +445,18 @@ public class SpielOberflaeche extends Application implements UserInterface {
                 buttonB.setMinWidth(120);
                 buttonB.setMinHeight(260);
                 buttonB.setStyle("-fx-stroke: firebrick; -fx-stroke-width: 2px;");
-             
                 
+                
+                /*
+                 * Erstellung der GridPanes. Es gibt ein Grid für die Muldenbuttons und eins für den Chat.
+                 * Die Elemente werden hier angeordnet.
+                 */
                 GridPane gridSpielfeld = new GridPane();
 	               
                 gridSpielfeld.setAlignment(Pos.CENTER);
                 gridSpielfeld.setHgap(20);
                 gridSpielfeld.setVgap(20);
                 gridSpielfeld.setPadding(new Insets(25, 25, 25, 25));
-//              grid.setGridLinesVisible(true);
                 
                 gridSpielfeld.add(spielernameA, 1, 1, 1, 1);
                 gridSpielfeld.add(spielernameB, 8, 1, 1, 1);
@@ -508,21 +502,25 @@ public class SpielOberflaeche extends Application implements UserInterface {
                 
                 spielfeld = new Scene(vBox, 1200, 700);
                 spielfeld.getStylesheets().add
-                (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
-//------------>	Ende Spielfeld Scene  
-                
+                (SpielOberflaeche.class.getResource("Background.css").toExternalForm());           
                 
                 hauptfenster.setScene(anmeldung);
                 hauptfenster.show();
 
 		    }
 
+		    /**
+		     * Die Methode übergibt der Runner-Klasse das Spielbrett, sodass dieses aktualisiert werden kann.
+		     */
 			@Override
 		    public void spielbrettVeraendert(Spielbrett spielbrett) {
 				System.out.println("spielbrettVeraendert wurde aufgerufen");
 				new Runner(spielbrett, this, client);
 			}
 
+			/**
+		     * Die Methode übergibt der Runner-Klasse eine Chat-Nachricht, sodass der Chat aktualisiert werden kann.
+		     */
 			@Override
 			public void chatVeraendert(String nachricht) {
 				new ChatRunner(nachricht, this, client);

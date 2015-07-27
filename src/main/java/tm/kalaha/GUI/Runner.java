@@ -5,6 +5,12 @@ import tm.kalaha.server.Spielbrett;
 import javafx.application.Platform;
 @SuppressWarnings("restriction")
 
+/**
+ * 
+ * @author Tanja
+ * Die Runner Klasse wurde geschrieben um die GUI nach Veränderungen zu aktualisieren.
+ *
+ */
 public class Runner extends Thread {
 	
 	private Spielbrett spielbrett;
@@ -18,6 +24,9 @@ public class Runner extends Thread {
 		start();
 	}
 	
+	/**
+	 * In der Methode wird festgelegt, welche Elemente auf welche Art und Weise aktualisiert werden sollen.
+	 */
 	public void run() {
 		try {
 			Platform.runLater(() -> this.gui.spielernameA.setText(spielbrett.getSpielerA().getSpielerName()));
@@ -38,12 +47,18 @@ public class Runner extends Thread {
 			Platform.runLater(() -> this.gui.button11.setText("" + spielbrett.getMulden()[11].getAnzahlSteine()));
 			Platform.runLater(() -> this.gui.buttonB.setText("" + spielbrett.getSpielerB().getGewonneneSteine()));
 			
+			/**
+			 * Vor der Aktualisierung der Ausgabe welcher Spieler am Zug ist muss zuvor geprüft werden, welcher Spieler am Zug ist.
+			 */
 			if(spielbrett.getSpielerA().isIstAmZug()){
 				Platform.runLater(() -> this.gui.istAmZug.setText("Spieler ' " + spielbrett.getSpielerA().getSpielerName() + "'ist am Zug."));
 			}else{
 				Platform.runLater(() -> this.gui.istAmZug.setText("Spieler ' " + spielbrett.getSpielerB().getSpielerName()+ "'ist am Zug."));
 			}
 			
+			/**
+			 * Die Abfrage stellt sicher, dass nur der Spieler, der einen Fehler begangen hat, die entsprechende Meldung erhält.
+			 */
 			if(client.getSpielerName().equals(spielbrett.getSpielerA().getSpielerName())){
 				
 				Platform.runLater(() -> this.gui.fehlerAusgabe.setText(spielbrett.getSpielerA().getFehlerMeldung()));

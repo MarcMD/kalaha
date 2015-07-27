@@ -1,7 +1,7 @@
 package tm.kalaha.serverInterface;
 
 /**
- * KalahaException wirde benutzt, um fehler im Spiel abzufangen. 
+ * KalahaException wird benutzt, um Fehler im Spiel abzufangen. 
  * @author marc
  *
  */
