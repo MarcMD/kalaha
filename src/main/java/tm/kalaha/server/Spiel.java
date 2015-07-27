@@ -1,5 +1,10 @@
 package tm.kalaha.server;
 
+/**
+ * Diese Klasse verkoerpert die Spiellogik. 
+ * @author marc
+ *
+ */
 public class Spiel {
 
 	private Spielbrett spielbrett = null;
@@ -26,11 +31,11 @@ public class Spiel {
 	/**
 	 * Diese Methode wird aufgerufen, um einen Zug eines Spielers zu starten.
 	 * Hierzu wird dem Spiel der spielernName und die Nummer der Mulde (im
-	 * Mulden-Array) übergeben. Die Steine werden dann nach Kalaha-Regeln
+	 * Mulden-Array) uebergeben. Die Steine werden dann nach Kalaha-Regeln
 	 * verteilt. Der Spieler bekommt die durch den Zug gewonnenen Steine
 	 * 
 	 * @param spielerName
-	 *            muss übergeben werden, damit die Methode den Spieler kennt
+	 *            muss uebergeben werden, damit die Methode den Spieler kennt
 	 * @param nummerMulde
 	 *            Zeiger auf die Mulde, die gespielt werden soll
 	 */
@@ -47,18 +52,18 @@ public class Spiel {
 		//Nur wenn noch kein Spieler gewonnen hat, kann das weiter gespielt werden
 		if (!spielbrett.getSpielerA().isHatGewonnen() && !spielbrett.getSpielerB().isHatGewonnen()) {
 
-			// Fehlermeldung wird bei jedem neuen Zug wieder zurückgesetzt
+			// Fehlermeldung wird bei jedem neuen Zug wieder zurueckgesetzt
 			spielbrett.getSpielerA().setFehlerMeldung(null);
 			spielbrett.getSpielerB().setFehlerMeldung(null);
 
-			// Prüfen, ob der Spieler am Zug ist
+			// Pruefen, ob der Spieler am Zug ist
 			if (aktuellerSpieler.getSpielerName().equals(spielerName)) {
 
-				// Prüfen, ob der Spieler diese Mulde spielen darf
+				// Pruefen, ob der Spieler diese Mulde spielen darf
 				// SpielerA darf 0-5 spielen, SpielerB darf 6-11 spielen
 				if (spielerDarfFeldSpielen(aktuellerSpieler, muldenNummer)) {
 					
-					//Prüfen ob die gespielte Mulde leer ist (Leere Mulden dürfen nicht gespielt werden)
+					//Pruefen ob die gespielte Mulde leer ist (Leere Mulden duerfen nicht gespielt werden)
 					if(spielbrett.getMulden()[muldenNummer].getAnzahlSteine()==0) {
 						aktuellerSpieler.setFehlerMeldung("Du kannst keine leeren Mulden spielen");
 					} else {
@@ -74,12 +79,12 @@ public class Spiel {
 							if (zeiger > 11) {
 								zeiger = 0;
 							}
-							spielbrett.getMulden()[zeiger].steinHinzufügen();
+							spielbrett.getMulden()[zeiger].steinHinzufuegen();
 							steine--;
 						}
 	
-						// Prüfen, ob der aktuelle Spieler Steine gewonnen hat
-						// Steine können gewonnen werden, wenn in dem Feld 3 oder 4
+						// Pruefen, ob der aktuelle Spieler Steine gewonnen hat
+						// Steine koennen gewonnen werden, wenn in dem Feld 3 oder 4
 						// Steine sind und
 						// der Spieler das Feld nicht spielen darf bzw. es sich um
 						// ein Feld des anderen Spielers handelt
@@ -93,7 +98,7 @@ public class Spiel {
 							}
 						}
 	
-						// Prüfen ob das Spiel zu Ende ist und Gewinner setzen
+						// Pruefen ob das Spiel zu Ende ist und Gewinner setzen
 						if (istSpielZuEnde(aktuellerSpieler)) {
 							spielbrett.getSpielerA()
 									.setFehlerMeldung(aktuellerSpieler.getSpielerName() + " hat das Spiel gewonnen");
@@ -108,7 +113,7 @@ public class Spiel {
 							}
 						}
 	
-						// nächster Spieler ist dran
+						// naechster Spieler ist dran
 						if (aktuellerSpieler.equals(spielbrett.getSpielerA())) {
 							spielbrett.getSpielerA().setIstAmZug(false);
 							spielbrett.getSpielerB().setIstAmZug(true);
@@ -122,7 +127,7 @@ public class Spiel {
 				}
 
 			} else {
-				// Wenn der Zug von einem Spieler ausgeführt wurde, obwohl
+				// Wenn der Zug von einem Spieler ausgefuehrt wurde, obwohl
 				// dieser Spieler nicht
 				// am Zug ist, bekommt dieser Spieler eine Fehlermeldung
 				if (spielbrett.getSpielerA().getSpielerName().equals(spielerName)) {
@@ -137,7 +142,7 @@ public class Spiel {
 	}
 
 	/**
-	 * Prüft, ob der Spieler aktuellerSpieler die Mulde muldenNummer spielen
+	 * Prueft, ob der Spieler aktuellerSpieler die Mulde muldenNummer spielen
 	 * darf. SpielerA darf die Mulden 0-5 bzw. 1-6 spielen SpielerB darf die
 	 * Mulden 6-11 bzw. 7-12 spielen
 	 * 
@@ -162,20 +167,17 @@ public class Spiel {
 	}
 
 	/**
-	 * Wird lokal nach jedem Zug aufgerufen, um zu prüfen, ob das Spiel zu Ende
+	 * Wird lokal nach jedem Zug aufgerufen, um zu pruefen, ob das Spiel zu Ende
 	 * ist.
 	 * 
 	 * @param aktuellerSpieler
 	 * @return true wenn das Spiel zu Ende ist
-	 */
-	
-//Unnötige Änderung für Git-Test
-	
+	 */	
 	public boolean istSpielZuEnde(Spieler aktuellerSpieler) {
 
 		boolean alleFelderLeer = false;
-		// Prüfen, ob der jeweils andere Spieler im nächsten Zug noch Steine zur
-		// Verfügung hat
+		// Pruefen, ob der jeweils andere Spieler im naechsten Zug noch Steine zur
+		// Verfuegung hat
 		if (aktuellerSpieler.equals(spielbrett.getSpielerB())) {
 			alleFelderLeer = true;
 			for (int i = 0; i <= 5; i++) {
@@ -203,7 +205,7 @@ public class Spiel {
 
 	/**
 	 * Wird von istSpielZuEnde benutzt um zu bestimmen, wer das Spiel gewonnen hat
-	 * und prüft, welcher Spieler die meisten Steine gewonnen hat. 
+	 * und prueft, welcher Spieler die meisten Steine gewonnen hat. 
 	 */
 	private Spieler bestimmeGewinner() {
 		if(spielbrett.getSpielerA().getGewonneneSteine() > spielbrett.getSpielerB().getGewonneneSteine()) {
@@ -215,18 +217,19 @@ public class Spiel {
 
 	/**
 	 * Startet ein neues Spiel, indem das alte Spielbrett auf null gesetzt wird.
-	 * SpielerName wird benutzt, um im nächsten Spiel eine Meldung auszugeben,
+	 * SpielerName wird benutzt, um im naechsten Spiel eine Meldung auszugeben,
 	 * welcher Spieler das neue Spiel gestartet hat.
 	 * 
 	 * @param spielerName
 	 * @return das neue Spielbrett
 	 */
 	public Spielbrett neuesSpielStarten(String spielerName) {
-		// TODO Meldung setzen
 		Spielbrett spielbrettAlt = this.spielbrett;
 		spielbrett = new Spielbrett();
 		spielbrett.getSpielerA().setSpielerName(spielbrettAlt.getSpielerA().getSpielerName());
 		spielbrett.getSpielerB().setSpielerName(spielbrettAlt.getSpielerB().getSpielerName());
+		spielbrett.getSpielerA().setFehlerMeldung("Neues Spiel wurde gestartet");
+		spielbrett.getSpielerB().setFehlerMeldung("Neues Spiel wurde gestartet");
 		return spielbrett;
 	}
 }

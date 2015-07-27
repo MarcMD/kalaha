@@ -3,12 +3,18 @@ package tm.kalaha.serverInterface;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import tm.kalaha.GUI.SpielbrettAction;
 import tm.kalaha.server.Spielbrett;
 
+/**
+ * Dieses Interface wird benutzt, um dem Client die zu implementierenden 
+ * Methoden vorzuschreiben. Die Kommentierung der Methoden befindet sich in 
+ * der Klasse RMIClient
+ * @author marc
+ *
+ */
 public interface RMIClientInterface extends Remote {
 		
-	public void spielbrettBekommen(Spielbrett spielbrett) throws RemoteException;
+	public void getSpielbrett(Spielbrett spielbrett) throws RemoteException;
 	
 	public String getSpielerName() throws RemoteException;
 	
@@ -22,7 +28,7 @@ public interface RMIClientInterface extends Remote {
 	
 	public void neuesSpiel() throws RemoteException;
 	
-	public void setMeinUI(SpielbrettAction meinUI) throws RemoteException;
+	public void setMeinUI(UserInterface meinUI) throws RemoteException;
 	
 	public void sendeChatNachrichtAnServer(String nachricht) throws RemoteException;
 	

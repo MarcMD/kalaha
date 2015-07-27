@@ -14,12 +14,21 @@ import tm.kalaha.serverInterface.RMIClientInterface;
 import tm.kalaha.serverInterface.ServerInterface;
 
 
+/**
+ * Diese Klasse stellt den RMIServer dar. Die Kommunikation mit den Clients und die 
+ * Verwaltund des Spiels wird ueber diese Klasse realisiert. 
+ * @author marc
+ *
+ */
 public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 
+	// Fuer die RMI Kommunikation benoetigte Veriablen
 	private static final long serialVersionUID = 4480875342963577221L;
 	private static final String HOST = "localhost";
 	private static final String SERVICE_NAME = "RMI-Server";
 	
+	//Spiel enthaelt die Spiellogik und das jeweils aktuelle 
+	//Abbild des Spielbrettes liefern
 	private Spiel meinSpiel = new Spiel();
 		
 	//Speichern der angemeldeten Clients
@@ -27,6 +36,11 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	private RMIClientInterface clientB = null;
 	
 	
+	/**
+	 * Konstruktor. 
+	 * Anmelden an der RMIRegistry. 
+	 * @throws RemoteException
+	 */
 	public RMIServer() throws RemoteException {
 		String bindURL = null;
 		try {
@@ -42,7 +56,11 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		}
 	}
 	
-
+	/**
+	 * main.
+	 * Eine neue Instanz dieser Klasse wird geschaffen. 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		try {
 			new RMIServer();
@@ -54,7 +72,12 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		}
 	}
 
-//TODO Testen
+	/**
+	 * Von von Clients aufgerufen, im sich anzumelden. Clients werden gespeichert. 
+	 * Außerdem werden die Namen der Clients zum Spiel hinzugefuegt. 
+	 * Aufruf von sendeSpielbrett() um den veraenderten Zustand des Spielbretts an 
+	 * die Clients zu senden.
+	 */
 	@Override
 	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, KalahaException {
 		System.out.println("Client meldet sich an");
@@ -79,6 +102,12 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		sendeSpielbrett();
 	}
 	
+	/**
+	 * Pruefen, ob ein client bereits angemeldet ist. Wird von der anmelden-Methode benutzt. 
+	 * @param client 
+	 * @return true wenn der client schon angemeldet ist. sonst false. 
+	 * @throws RemoteException
+	 */
 	private synchronized boolean angemeldet(RMIClientInterface client) throws RemoteException {
 		if(clientA != null) {
 			if(clientA.equals(client)) {
@@ -93,7 +122,11 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		return false;
 	}
 
-
+	/**
+	 * Kann von Clients aufgerufen werden, um sich vom Spiel anzumelden. 
+	 * Aufruf von sendeSpielbrett() um den veraenderten Zustand des Spielbretts an 
+	 * die Clients zu senden.
+	 */
 	@Override
 	public synchronized void abmelden(RMIClientInterface client) {
 		if(clientA.equals(client)) {
@@ -103,32 +136,26 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 			clientB = null;
 			meinSpiel.getSpielbrett().getSpielerB().setSpielerName(null);
 		}
-		sendeSpielbrett();
-		//		String msg = null;
-//		if(!angemeldet(client.getSpielerName())) {
-//			msg = "Client " +client.getSpielerName() + " ist nicht angemeldet.";
-//			throw new KalahaException(msg);
-//		}
-//		msg = client.getSpielerName() + " hat sich abgemeldet.";
-//		clients.remove(client);
-//		for(RMIClientInterface c: clients) {
-//			c.sendeNachricht(msg);
-//		}
-//		printStatus();		
+		sendeSpielbrett();	
 	}
 			
+	/**
+	 * Wenn das Spielbrett von der Spiellogik (die Klasse Spiel) veraendert 
+	 * wurde, kann diese Methode aufgerufen werden. Das neue Spielbrett 
+	 * wird dann an die Clients gesendet. 
+	 */
 	public synchronized void sendeSpielbrett() {
 		
 			try {
 				System.out.println("Spielbrett an ClientA schicken");
-				clientA.spielbrettBekommen(meinSpiel.getSpielbrett());
+				clientA.getSpielbrett(meinSpiel.getSpielbrett());
 				System.out.println("Spielbrett an ClientA geschickt");
 			} catch (Exception e) {
 				System.out.println("Spielbrett konnte nicht an ClientA geschickt werden. ClientA wurde nicht gefunden.");			
 			}
 			try {
 				System.out.println("Spielbrett an ClientB schicken");
-				clientB.spielbrettBekommen(meinSpiel.getSpielbrett());
+				clientB.getSpielbrett(meinSpiel.getSpielbrett());
 				System.out.println("Spielbrett an ClientB geschickt");
 			} catch (Exception e) {
 				System.out.println("Spielbrett konnte nicht an ClientB geschickt werden. ClientB wurde nicht gefunden.");			
@@ -136,6 +163,10 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	}
 
 
+	/**
+	 * Wird von einem Client aufgerufen, um eine Mulde zu spielen. 
+	 * Der Aufruf wird hier an die Spiellogik weiter gegeben. 
+	 */
 	@Override
 	public synchronized void muldeSpielen(String spielerName, int muldenNummer) throws RemoteException, KalahaException {
 		System.out.println(spielerName + " spielt Mulde "+muldenNummer);
@@ -144,21 +175,30 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	}
 
 
+	/**
+	 * Wrid von einem Client aufgerufen, um ein neues Spiel zu starten. 
+	 * Der Aufruf wird hier an die Spiellogik weiter gegeben. 
+	 */
 	@Override
 	public synchronized void neuesSpielStarten(String spielerName) {
-		//TODO Meldung ausgeben
 		System.out.println("Neues Spiel wurde gestartet von " +spielerName);
 		meinSpiel.neuesSpielStarten(spielerName);
 		sendeSpielbrett();
 	}
 
-
+	/**
+	 * Diese Methode wird von einem Client aufgerufen, um eine Nachricht an den Server
+	 * zu schicken. Der Server verteilt die Nachricht in dieser Methode an alle Clients
+	 * durch den Methodenaufruf chatNachrichtAnClientSenden(spielerName+": "+nachricht);
+	 */
 	@Override
 	public void chatNachrichtVonClientEmpfangen(String spielerName, String nachricht) throws RemoteException {
 		chatNachrichtAnClientSenden(spielerName+": "+nachricht);
 	}
 
-
+	/**
+	 * Die uebergebene Nachricht wird an alle Clients geschickt. 
+	 */
 	@Override
 	public void chatNachrichtAnClientSenden(String nachricht) throws RemoteException {
 		try {

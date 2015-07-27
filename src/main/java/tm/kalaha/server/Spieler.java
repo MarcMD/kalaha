@@ -2,6 +2,28 @@ package tm.kalaha.server;
 
 import java.io.Serializable;
 
+/**
+ * Stellt einen Spieler dar. 
+ * Spieler ist Serilizable und
+ * kann daher mit dem Spielbrett an den RMIClient geschickt werden.
+ * 
+ * Ein Spieler hat: 
+ * - spielerName
+ * - gewonnenenSteine
+ * - fehlerMeldung
+ * Ein Spieler kann am Zug sein oder nicht am Zug sein. Dieser Sachverhalt wird durch die Variable
+ * istAmZug (boolean) verkoerpert. 
+ * Ein Spieler kann gewonnen haben oder (noch) nicht gewonnen haben. Dieser Sachverhalt wurde durch die
+ * Variable hatGewonnen (boolean) verkoerpert. 
+ * 
+ * Neben den genannten Variablen finden sich in dieser Klasse entsprechende Getter und Setter. 
+ * 
+ * Zudem findet sich in dieser Klasse die Methode steineGewinnen(int steine), die die übergebene 
+ * Anzahl (von Steinen) zu der bereits gewonnen Anzahl von Steinen hinzufügt. 
+ * 
+ * @author marc
+ *
+ */
 public class Spieler implements Serializable {
 	
 	private static final long serialVersionUID = -3442781897113668309L;

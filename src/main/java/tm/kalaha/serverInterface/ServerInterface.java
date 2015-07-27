@@ -3,6 +3,13 @@ package tm.kalaha.serverInterface;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+/**
+ * Dieses Interface wird benutzt, um dem Server die zu implementierenden 
+ * Methoden vorzuschreiben. Die Kommentierung der Methoden befindet sich in 
+ * der Klasse RMIServer
+ * @author marc
+ *
+ */
 public interface ServerInterface extends Remote {
 	
 	public void anmelden(RMIClientInterface client) throws RemoteException, KalahaException;

@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.scene.effect.InnerShadow;
 import tm.kalaha.client.RMIClient;
 import tm.kalaha.server.Spielbrett;
+import tm.kalaha.serverInterface.UserInterface;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,7 +37,7 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 
 @SuppressWarnings({ "restriction" })
-public class SpielOberflaeche extends Application implements SpielbrettAction {
+public class SpielOberflaeche extends Application implements UserInterface {
 
 	Scene anmeldung = null;
 	Scene aufSpielerWarten = null;

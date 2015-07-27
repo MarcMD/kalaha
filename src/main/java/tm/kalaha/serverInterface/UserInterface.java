@@ -1,4 +1,4 @@
-package tm.kalaha.GUI;
+package tm.kalaha.serverInterface;
 
 import tm.kalaha.server.Spielbrett;
 
@@ -10,7 +10,7 @@ import tm.kalaha.server.Spielbrett;
  * @author marc
  *
  */
-public interface SpielbrettAction {
+public interface UserInterface {
 
 	public void spielbrettVeraendert(Spielbrett spielbrett);
 
