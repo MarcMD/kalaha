@@ -7,12 +7,10 @@ import javafx.application.Platform;
 @SuppressWarnings("restriction")
 
 /**
+ * Die Runner Klasse wurde geschrieben um die GUI nach Veränderungen zu
+ * aktualisieren.
  * 
  * @author Tanja
- * 
- *         Die Runner Klasse wurde geschrieben um die GUI nach Veränderungen zu
- *         aktualisieren.
- *
  */
 public class Runner extends Thread {
 

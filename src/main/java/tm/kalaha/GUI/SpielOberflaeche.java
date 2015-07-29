@@ -64,10 +64,11 @@ public class SpielOberflaeche extends Application implements UserInterface {
 	Button neuesSpielStartenBtn = null;
 
 	/**
-	 * @author Tanja
 	 * 
-	 *         Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX
-	 *         GUI die für das Spiel benoetigt werden.
+	 * Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die
+	 * für das Spiel benoetigt werden.
+	 * 
+	 * @author Tanja
 	 */
 	public static void main(String[] args) {
 		try {
