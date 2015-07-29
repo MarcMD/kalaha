@@ -65,7 +65,8 @@ public class SpielOberflaeche extends Application implements UserInterface {
 	
 	
 	/**
-	 * @author Tanja Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die für das Spiel benötigt werden.
+	 * @author Tanja 
+	 * Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die für das Spiel benoetigt werden.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -178,7 +179,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 	});
 		 
 		 	/*
-			 * Akton für den Anmeldungsbutton: Das Spielfeld wird angezeigt, der Client bekommt einen Namen und
+			 * Aktion für den Anmeldungsbutton: Das Spielfeld wird angezeigt, der Client bekommt einen Namen und
 			 * eine IP-Adresse und meldet sich an
 			 * */
 		 anmeldungBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -366,7 +367,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
  button0.setMinWidth(120);
  button0.setMinHeight(120);
- //EventHandler for Buttons
  button0.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -384,7 +384,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
  button1.setMinWidth(120);
  button1.setMinHeight(120);
- //EventHandler for Buttons
  button1.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -402,7 +401,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
  button2.setMinWidth(120);
  button2.setMinHeight(120);
- //EventHandler for Buttons
  button2.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -420,7 +418,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
  button3.setMinWidth(120);
  button3.setMinHeight(120);
- //EventHandler for Buttons
  button3.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -438,7 +435,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
  button4.setMinWidth(120);
  button4.setMinHeight(120);
- //EventHandler for Buttons
  button4.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -456,7 +452,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonBlue.css").toExternalForm());
  button5.setMinWidth(120);
  button5.setMinHeight(120);
- //EventHandler for Buttons
  button5.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -474,7 +469,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
  button6.setMinWidth(120);
  button6.setMinHeight(120);
- //EventHandler for Buttons
  button6.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -492,7 +486,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
  button7.setMinWidth(120);
  button7.setMinHeight(120);
- //EventHandler for Buttons
  button7.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -510,7 +503,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
  button8.setMinWidth(120);
  button8.setMinHeight(120);
- //EventHandler for Buttons
  button8.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -528,7 +520,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
  button9.setMinWidth(120);
  button9.setMinHeight(120);
- //EventHandler for Buttons
  button9.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -546,7 +537,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
  button10.setMinWidth(120);
  button10.setMinHeight(120);
- //EventHandler for Buttons
  button10.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -564,7 +554,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  (SpielOberflaeche.class.getResource("ButtonGreen.css").toExternalForm());
  button11.setMinWidth(120);
  button11.setMinHeight(120);
- //EventHandler for Buttons
  button11.setOnAction(new EventHandler<ActionEvent>() {
  
  @Override
@@ -648,7 +637,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  
  VBox vBoxGesamt = new VBox();
  vBoxGesamt.setSpacing(0); 
-// vBoxGesamt.setPadding(new Insets(5,5,5,5));
  vBoxGesamt.getChildren().addAll(gridSpielfeld, hBoxChatBtn);
  vBoxGesamt.setVisible(true);
 
@@ -656,7 +644,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
  spielfeld = new Scene(vBoxGesamt, 1200, 700);
  spielfeld.getStylesheets().add
  (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
-//------------>	Ende Spielfeld Scene 
  
  hauptfenster.setScene(anmeldung);
  hauptfenster.show();
@@ -664,7 +651,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 }
 
 		/**
-		 * Die Methode übergibt der Runner-Klasse das Spielbrett, sodass dieses aktualisiert werden kann.
+		 * Die Methode uebergibt der Runner-Klasse das Spielbrett, sodass dieses aktualisiert werden kann.
 		 */
 	@Override
 	public void spielbrettVeraendert(Spielbrett spielbrett) {
@@ -673,7 +660,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 	}
 
 	/**
-	 * Die Methode übergibt der Runner-Klasse eine Chat-Nachricht, sodass der Chat aktualisiert werden kann.
+	 * Die Methode uebergibt der Runner-Klasse eine Chat-Nachricht, sodass der Chat aktualisiert werden kann.
 	 */
 	@Override
 	public void chatVeraendert(String nachricht) {
