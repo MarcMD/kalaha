@@ -18,10 +18,10 @@ public class Spiel {
 
 	/**
 	 * Getter. Kann bspw. vom Server aufgerufen werden, um das Spielbrett zu
-	 * bekommen, das vom Server an den Client ge- sendet und dort angezeigt
+	 * bekommen, das vom Server an den Client gesendet und dort angezeigt
 	 * werden kann.
 	 * 
-	 * @return da verwendete Spielbrett
+	 * @return das verwendete Spielbrett
 	 * 
 	 */
 	public Spielbrett getSpielbrett() {
@@ -32,7 +32,7 @@ public class Spiel {
 	 * Diese Methode wird aufgerufen, um einen Zug eines Spielers zu starten.
 	 * Hierzu wird dem Spiel der spielernName und die Nummer der Mulde (im
 	 * Mulden-Array) uebergeben. Die Steine werden dann nach Kalaha-Regeln
-	 * verteilt. Der Spieler bekommt die durch den Zug gewonnenen Steine
+	 * verteilt. Der Spieler bekommt die durch den Zug gewonnenen Steine.
 	 * 
 	 * @param spielerName
 	 *            muss uebergeben werden, damit die Methode den Spieler kennt

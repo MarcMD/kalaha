@@ -3,7 +3,10 @@ package tm.kalaha.GUI;
 import tm.kalaha.client.RMIClient;
 import javafx.application.Platform;
 
-
+/**
+ * @author Tanja
+ * Die Chat-Runner Klasse wurde geschrieben um den Chat nach Veränderungen zu aktualisieren.
+ */
 public class ChatRunner extends Thread {
 	
 	private String nachricht;
