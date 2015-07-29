@@ -1,6 +1,5 @@
 package tm.kalaha.GUI;
 
-//import java.awt.event.KeyEvent;
 import java.rmi.RemoteException;
 
 import javafx.application.Platform;
