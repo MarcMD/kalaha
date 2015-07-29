@@ -80,7 +80,6 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	 */
 	@Override
 	public synchronized void anmelden(RMIClientInterface client) throws RemoteException, KalahaException {
-		System.out.println("Client meldet sich an");
 		if(angemeldet(client)) {
 			//TODO Fehlermeldung
 			System.out.println("Gewählter Name ist schon vergeben");
@@ -146,19 +145,18 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	 */
 	public synchronized void sendeSpielbrett() {
 		
+			System.out.print("Spielbrett schicken ... ");
 			try {
-				System.out.println("Spielbrett an ClientA schicken");
 				clientA.getSpielbrett(meinSpiel.getSpielbrett());
-				System.out.println("Spielbrett an ClientA geschickt");
+				System.out.print("An ClientA geschickt ... ");
 			} catch (Exception e) {
-				System.out.println("Spielbrett konnte nicht an ClientA geschickt werden. ClientA wurde nicht gefunden.");			
+				System.out.print("ClientA wurde nicht gefunden ... ");			
 			}
 			try {
-				System.out.println("Spielbrett an ClientB schicken");
 				clientB.getSpielbrett(meinSpiel.getSpielbrett());
-				System.out.println("Spielbrett an ClientB geschickt");
+				System.out.println("An ClientB geschickt. ");
 			} catch (Exception e) {
-				System.out.println("Spielbrett konnte nicht an ClientB geschickt werden. ClientB wurde nicht gefunden.");			
+				System.out.println("ClientB wurde nicht gefunden. ");			
 			}
 	}
 
@@ -201,14 +199,13 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 	 */
 	@Override
 	public void chatNachrichtAnClientSenden(String nachricht) throws RemoteException {
+		System.out.println("Chat-Nachricht an schicken: "+nachricht);
 		try {
-			System.out.println("Nachricht an clientA schicken: "+nachricht);
 			clientA.empfangechatNachrichtVonServer(nachricht);
 		} catch (Exception e) {
 			System.out.println("Nachricht konnte nacht an clientA geschickt werden. ClientA wurde nicht gefunden.");
 		}
 		try {
-			System.out.println("Nachricht an clientB schicken: "+nachricht);
 			clientB.empfangechatNachrichtVonServer(nachricht);
 		} catch (Exception e) {
 			System.out.println("Nachricht konnte nacht an clientB geschickt werden. ClientB wurde nicht gefunden.");
