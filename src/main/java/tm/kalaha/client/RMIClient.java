@@ -43,7 +43,8 @@ public class RMIClient extends UnicastRemoteObject implements RMIClientInterface
 	/**
 	 * Konstruktor. Setzt den Spielernamen.
 	 * 
-	 * @param n spielerName
+	 * @param n
+	 *            spielerName
 	 * @throws RemoteException
 	 */
 	public RMIClient(String n) throws RemoteException {
