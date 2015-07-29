@@ -131,9 +131,11 @@ public class RMIServer extends UnicastRemoteObject implements ServerInterface {
 		if(clientA.equals(client)) {
 			clientA = null;
 			meinSpiel.getSpielbrett().getSpielerA().setSpielerName(null);
+			meinSpiel.neuesSpielStarten(null);
 		} else if(clientB.equals(client)) {
 			clientB = null;
 			meinSpiel.getSpielbrett().getSpielerB().setSpielerName(null);
+			meinSpiel.neuesSpielStarten(null);
 		}
 		sendeSpielbrett();	
 	}
