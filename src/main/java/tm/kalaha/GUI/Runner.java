@@ -51,9 +51,9 @@ public class Runner extends Thread {
 			 * Vor der Aktualisierung der Ausgabe welcher Spieler am Zug ist muss zuvor geprüft werden, welcher Spieler am Zug ist.
 			 */
 			if(spielbrett.getSpielerA().isIstAmZug()){
-				Platform.runLater(() -> this.gui.istAmZug.setText("Spieler ' " + spielbrett.getSpielerA().getSpielerName() + "'ist am Zug."));
+				Platform.runLater(() -> this.gui.istAmZug.setText("Spieler ' " + spielbrett.getSpielerA().getSpielerName() + "' ist am Zug."));
 			}else{
-				Platform.runLater(() -> this.gui.istAmZug.setText("Spieler ' " + spielbrett.getSpielerB().getSpielerName()+ "'ist am Zug."));
+				Platform.runLater(() -> this.gui.istAmZug.setText("Spieler ' " + spielbrett.getSpielerB().getSpielerName()+ "' ist am Zug."));
 			}
 			
 			/**

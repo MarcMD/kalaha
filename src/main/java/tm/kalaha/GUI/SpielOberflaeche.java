@@ -246,7 +246,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
  	}
  });
  
- Button regelnBtn = new Button("       Regeln       ");
+ Button regelnBtn = new Button("           Regeln           ");
  regelnBtn.setTextFill(Color.ANTIQUEWHITE);
  regelnBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
  regelnBtn.setStyle("-fx-base: #0000B8; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
@@ -308,7 +308,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 	}
 		 });
  
- abmeldenBtn = new Button("        Abmelden       ");
+ abmeldenBtn = new Button("         Abmelden        ");
  abmeldenBtn.setTextFill(Color.ANTIQUEWHITE);
 		 abmeldenBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		 abmeldenBtn.setStyle("-fx-base: #E62E00; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
