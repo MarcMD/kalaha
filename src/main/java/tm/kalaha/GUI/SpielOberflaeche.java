@@ -300,7 +300,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 				 gridRegeln.add(regelText, 0, 0);
 				 gridRegeln.add(zurueckBtn, 0, 2);
 
-				 regeln = new Scene(gridRegeln, 700, 500);
+				 regeln = new Scene(gridRegeln, 800, 600);
 				 regeln.getStylesheets().add
 		 (SpielOberflaeche.class.getResource("Background.css").toExternalForm());
 		 		hauptfenster.setScene(regeln);
