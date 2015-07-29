@@ -32,6 +32,13 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
 
+/**
+ * 
+ * Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die
+ * für das Spiel benoetigt werden.
+ * 
+ * @author Tanja
+ */
 @SuppressWarnings({ "restriction" })
 public class SpielOberflaeche extends Application implements UserInterface {
 
@@ -63,13 +70,6 @@ public class SpielOberflaeche extends Application implements UserInterface {
 	Button abmeldenBtn = null;
 	Button neuesSpielStartenBtn = null;
 
-	/**
-	 * 
-	 * Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die
-	 * für das Spiel benoetigt werden.
-	 * 
-	 * @author Tanja
-	 */
 	public static void main(String[] args) {
 		try {
 			client = new RMIClient(" ");

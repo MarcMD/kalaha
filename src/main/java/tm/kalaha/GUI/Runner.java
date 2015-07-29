@@ -10,7 +10,8 @@ import javafx.application.Platform;
  * Die Runner Klasse wurde geschrieben um die GUI nach Veränderungen zu
  * aktualisieren.
  * 
- * @author Tanja
+ * @author marc
+ *
  */
 public class Runner extends Thread {
 

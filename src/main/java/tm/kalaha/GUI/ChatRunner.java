@@ -8,6 +8,7 @@ import javafx.application.Platform;
  * aktualisieren.
  * 
  * @author Tanja
+ *
  */
 public class ChatRunner extends Thread {
 
