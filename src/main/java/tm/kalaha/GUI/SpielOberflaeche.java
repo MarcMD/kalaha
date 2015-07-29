@@ -26,11 +26,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
-//import javafx.event.ActionEvent;
-//import javafx.event.EventHandler;
 import javafx.scene.text.FontPosture;
 import javafx.scene.shape.Circle;
-import javafx.geometry.Pos;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
 import javafx.stage.WindowEvent;
@@ -65,7 +62,11 @@ public class SpielOberflaeche extends Application implements UserInterface {
 	Button buttonB = null;
 	Button abmeldenBtn = null;
 	Button neuesSpielStartenBtn = null;
-
+	
+	
+	/**
+	 * @author Tanja Die Klasse SpielOberflaeche beinhaltet alle Elemente der Java FX GUI die für das Spiel benötigt werden.
+	 */
 	public static void main(String[] args) {
 		try {
 			client = new RMIClient("DummyName");
@@ -77,7 +78,10 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		launch(args);
 	}
 
-	@Override
+	/**
+	 * Die Stage ist der Schauplatz für die verschiedenen Scenen, die in der GUI gezeigt werden.
+	 */
+		@Override
 		 public void start(Stage hauptfenster) {
 		 	
 		 	hauptfenster.setTitle("Kalaha");
@@ -89,8 +93,10 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 	 }
 		 	});
 		 	
-		 	//Client bekommt dieses Objekt übergeben und kann dann
-		 	//die Methode spielbrettVeraendert() aufrufen
+		 	/*
+		 	 * Client bekommt dieses Objekt übergeben und kann dann
+		 	 * die Methode spielbrettVeraendert() aufrufen
+		 	 */
 		 	client.setMeinUI(this);
 		 	
 		 
@@ -114,7 +120,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 isChat.setOffsetX(3.0f);
 		 isChat.setColor(Color.web("#6E573D"));
 		 	
-//------------> Anmeldungs Scene
+
 		 	GridPane gridAnmeldung = new GridPane();
 		 gridAnmeldung.setAlignment(Pos.CENTER);
 		 gridAnmeldung.setHgap(20);
@@ -171,6 +177,10 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 	hauptfenster.close();
 		 	});
 		 
+		 	/*
+			 * Akton für den Anmeldungsbutton: Das Spielfeld wird angezeigt, der Client bekommt einen Namen und
+			 * eine IP-Adresse und meldet sich an
+			 * */
 		 anmeldungBtn.setOnAction(new EventHandler<ActionEvent>() {
 			 
 		 	@Override
@@ -184,9 +194,11 @@ public class SpielOberflaeche extends Application implements UserInterface {
 
 		 	}
 		 });
-//------------> Ende Anmeldungs Scene
-
-//------------> Start Spielfeld Scene
+		 
+		 /*
+			 * Code für die Spielfeld Szene.
+			 */
+		 
  	 	spielernameA = new Label(client.getSpielbrett().getSpielerA().getSpielerName());
  spielernameA.setTextFill(Color.web("#0099FF"));
  spielernameA.setFont(Font.font("Arial", FontWeight.NORMAL, 28));
@@ -234,7 +246,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
  	}
  });
  
- Button regelnBtn = new Button(" Regeln ");
+ Button regelnBtn = new Button("       Regeln       ");
  regelnBtn.setTextFill(Color.ANTIQUEWHITE);
  regelnBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
  regelnBtn.setStyle("-fx-base: #0000B8; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
@@ -296,7 +308,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 	}
 		 });
  
- abmeldenBtn = new Button(" Abmelden ");
+ abmeldenBtn = new Button("        Abmelden       ");
  abmeldenBtn.setTextFill(Color.ANTIQUEWHITE);
 		 abmeldenBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
 		 abmeldenBtn.setStyle("-fx-base: #E62E00; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;");
@@ -329,6 +341,10 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 	}
 		 });
  	
+ /*
+  * Mulden Buttons für das Spiel. Die Buttons 0-11 können die Methode muldeSpielen des Clients
+  * aufrufen.
+  * */
  buttonA = new Button();
  buttonA.setText("" + client.getSpielbrett().getSpielerA().getGewonneneSteine());
  double radiusSammelMulden =10;
@@ -564,7 +580,10 @@ public class SpielOberflaeche extends Application implements UserInterface {
  buttonB.setMinHeight(260);
  buttonB.setStyle("-fx-stroke: firebrick; -fx-stroke-width: 2px;");
  
- 
+ /*
+  * Erstellung der GridPanes. Es gibt ein Grid für die Muldenbuttons und eins für den Chat.
+  * Die Elemente werden hier angeordnet.
+  */
  GridPane gridSpielfeld = new GridPane();
 	 
  gridSpielfeld.setAlignment(Pos.CENTER);
@@ -642,12 +661,18 @@ public class SpielOberflaeche extends Application implements UserInterface {
 
 		 }
 
+		/**
+		 * Die Methode übergibt der Runner-Klasse das Spielbrett, sodass dieses aktualisiert werden kann.
+		 */
 	@Override
 	public void spielbrettVeraendert(Spielbrett spielbrett) {
 		System.out.println("spielbrettVeraendert wurde aufgerufen");
 		new Runner(spielbrett, this, client);
 	}
 
+	/**
+	 * Die Methode übergibt der Runner-Klasse eine Chat-Nachricht, sodass der Chat aktualisiert werden kann.
+	 */
 	@Override
 	public void chatVeraendert(String nachricht) {
 		new ChatRunner(nachricht, this, client);
