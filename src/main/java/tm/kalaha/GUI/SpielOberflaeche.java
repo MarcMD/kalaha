@@ -228,6 +228,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
  outputTxt.setStyle("-fx-text-fill: #424242; -fx-base: #E1D398; -fx-font: 14 arial;");
  outputTxt.setEffect(isChat);
  outputTxt.setMinHeight(150);
+ outputTxt.setScrollTop(Double.MAX_VALUE);
  
  inputTxt = new TextField();
  inputTxt.setFocusTraversable(true);
@@ -260,7 +261,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 		gridRegeln.setHgap(10);
 		 		gridRegeln.setVgap(10);
 		 		gridRegeln.setPadding(new Insets(40, 40, 40, 40));
-		 						 
+		 		
 		 		String regelnString = 
 		 				"Zu Beginn werden in jede runde Mulde der Spieler 4 Steine gelegt \n" +
 		 				"Gewinner ist amEnde, wer mehr Steine in seinem 'Kalaha' hat, also \n" +
@@ -277,12 +278,13 @@ public class SpielOberflaeche extends Application implements UserInterface {
 		 				"Die Spieler Wechseln sich so lange ab, bis ein Spieler nicht mehr \n"+
 		 				"ziehen kann, da er keine Steine mehr in seinen Mulden hat.\n"+
 		 				"\n";
-		 		
-				 Text regelText = new Text(regelnString);
-				 regelText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-				 regelText.setFill(Color.ANTIQUEWHITE);
-				 regelText.setEffect(dsSchrift);
-				 				 
+		 	
+			 	 Label regelTextLabel = new Label(regelnString); 
+			 	 regelTextLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+			 	 regelTextLabel.setTextFill(Color.ANTIQUEWHITE);
+			 	 regelTextLabel.setEffect(dsSchrift);
+			 	 regelTextLabel.setWrapText(true);
+			 	 				 				 
 				 Button zurueckBtn = new Button("Zurück zum Spiel");
 				 zurueckBtn.setTextFill(Color.ANTIQUEWHITE);
 				 zurueckBtn.setFont(Font.font("Arial", FontWeight.BOLD, 16));
@@ -297,7 +299,7 @@ public class SpielOberflaeche extends Application implements UserInterface {
 				 	}
 				 });
 				 
-				 gridRegeln.add(regelText, 0, 0);
+				 gridRegeln.add(regelTextLabel, 0, 0);
 				 gridRegeln.add(zurueckBtn, 0, 2);
 
 				 regeln = new Scene(gridRegeln, 800, 600);
